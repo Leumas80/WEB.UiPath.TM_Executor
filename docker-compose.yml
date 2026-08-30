@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  # TM Executor application service
+  web-uipath-testexecutor:
+    image: nginx:alpine
+    container_name: web-uipath-testexecutor
+    restart: unless-stopped
+    ports:
+      - "8085:80"
+    volumes:
+      - .:/usr/share/nginx/html:ro

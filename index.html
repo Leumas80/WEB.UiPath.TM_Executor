@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IniciaME | TM Executor </title>
+	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='5' y='35' width='12' height='30' rx='6' fill='%231E293B' stroke='%23DAA520' stroke-width='3'/%3E%3Crect x='83' y='35' width='12' height='30' rx='6' fill='%231E293B' stroke='%23DAA520' stroke-width='3'/%3E%3Crect x='15' y='10' width='70' height='80' rx='28' fill='%233B82F6' stroke='%231E3A8A' stroke-width='4'/%3E%3Crect x='30' y='16' width='40' height='15' rx='6' fill='%232563EB'/%3E%3Ccircle cx='36' cy='45' r='16' fill='%237DD3FC' stroke='%23D97706' stroke-width='5'/%3E%3Ccircle cx='64' cy='45' r='16' fill='%237DD3FC' stroke='%23D97706' stroke-width='5'/%3E%3Crect x='48' y='41' width='4' height='8' fill='%23D97706'/%3E%3Ccircle cx='38' cy='45' r='6' fill='%230F172A'/%3E%3Ccircle cx='62' cy='45' r='6' fill='%230F172A'/%3E%3Ccircle cx='40' cy='43' r='2' fill='%23FFFFFF'/%3E%3Ccircle cx='64' cy='43' r='2' fill='%23FFFFFF'/%3E%3Cpath d='M 32 68 Q 50 82 68 68' stroke='%230F172A' stroke-width='4' stroke-linecap='round' fill='%23FFFFFF'/%3E%3C/svg%3E">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        .sidebar { min-height: 100vh; background-color: #0f172a; color: #fff; }
+        .sidebar .nav-link { color: #94a3b8; font-weight: 500; margin-bottom: 4px; cursor: pointer; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { color: #fff; background-color: #1e293b; border-radius: 6px; }
+        .badge-status { font-weight: 600; font-size: 0.75rem; padding: 0.35em 0.65em; }
+        .table-v-align td, .table-v-align th { vertical-align: middle; }
+        .code-inline { font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.85em; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; }
+        .view-section { display: none; }
+        .view-section.active { display: block; }
+			@media (max-width: 768px) {.sidebar { min-height: auto; } 
+            .style-search { width: 100% !important; margin-top: 10px; }
+            .card-header { flex-direction: column; align-items: flex-start !important; }
+            .btn-toolbar { width: 100%; display: flex; gap: 5px; }
+            .btn-toolbar .btn { flex: 1; font-size: 0.8rem; padding: 0.375rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar Navigation -->
+        <aside class="col-12 col-md-3 col-lg-2 sidebar p-3 d-flex flex-column">
+		<div class="d-flex align-items-center justify-content-between mb-3 text-white">
+			<div class="d-flex align-items-center" onclick="switchTab('homeView', document.querySelectorAll('#sidebarMenu .nav-link')[0])" style="cursor: pointer;" title="Go to Home">
+				<svg class="me-2" width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<rect x="5" y="35" width="12" height="30" rx="6" fill="#1E293B" stroke="#DAA520" stroke-width="3"/>
+					<rect x="83" y="35" width="12" height="30" rx="6" fill="#1E293B" stroke="#DAA520" stroke-width="3"/>
+					<rect x="15" y="10" width="70" height="80" rx="28" fill="#3B82F6" stroke="#1E3A8A" stroke-width="4"/>
+					<rect x="30" y="16" width="40" height="15" rx="6" fill="#2563EB"/>
+					<circle cx="36" cy="45" r="16" fill="#7DD3FC" stroke="#D97706" stroke-width="5"/>
+					<circle cx="64" cy="45" r="16" fill="#7DD3FC" stroke="#D97706" stroke-width="5"/>
+					<rect x="48" y="41" width="4" height="8" fill="#D97706"/>
+					<circle cx="38" cy="45" r="6" fill="#0F172A"/>
+					<circle cx="62" cy="45" r="6" fill="#0F172A"/>
+					<circle cx="40" cy="43" r="2" fill="#FFFFFF"/>
+					<circle cx="64" cy="43" r="2" fill="#FFFFFF"/>
+					<path d="M 32 68 Q 50 82 68 68" stroke="#0F172A" stroke-width="4" stroke-linecap="round" fill="#FFFFFF"/>
+				</svg>
+				<div class="d-flex flex-column lh-1">
+					<span class="fs-5 fw-bold">IniciaME</span>
+					<span class="fw-normal" style="font-size: 0.7rem; color: #94a3b8;">TM Executor</span>
+				</div>
+			</div>
+			<button class="btn btn-outline-light d-md-none p-1" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenuCollapse">
+				<i class="bi bi-list fs-4"></i>
+			</button>
+		</div>
+            
+            <div class="collapse d-md-block" id="sidebarMenuCollapse">
+                <ul class="nav nav-pills flex-column mb-auto" id="sidebarMenu">
+                    <li class="nav-item">
+                        <a class="nav-link active" onclick="switchTab('homeView', this)">
+                            <i class="bi bi-house-door me-2"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="switchTab('testCasesView', this)">
+                            <i class="bi bi-check2-square me-2"></i> Test Cases
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="switchTab('testSetsView', this)">
+                            <i class="bi bi-folder2-open me-2"></i> Test Sets
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="switchTab('reportsView', this)">
+                            <i class="bi bi-bar-chart-line me-2"></i> Reports & Logs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="switchTab('configView', this)">
+                            <i class="bi bi-gear me-2"></i> Environment Config
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="col-12 col-md-9 col-lg-10 ms-sm-auto px-md-4 py-4">
+            
+            <div id="alertMessage" class="alert alert-info alert-dismissible fade show d-none" role="alert">
+                <span id="alertText">Loading...</span>
+            </div>
+
+            <!-- VIEW 0: HOME -->
+            <div id="homeView" class="view-section active">
+                <div class="text-center py-4 mb-4 bg-white rounded-3 shadow-sm border p-4">
+                    <svg class="mb-3" width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="5" y="35" width="12" height="30" rx="6" fill="#1E293B" stroke="#DAA520" stroke-width="3"/>
+                        <rect x="83" y="35" width="12" height="30" rx="6" fill="#1E293B" stroke="#DAA520" stroke-width="3"/>
+                        <rect x="15" y="10" width="70" height="80" rx="28" fill="#3B82F6" stroke="#1E3A8A" stroke-width="4"/>
+                        <rect x="30" y="16" width="40" height="15" rx="6" fill="#2563EB"/>
+                        <circle cx="36" cy="45" r="16" fill="#7DD3FC" stroke="#D97706" stroke-width="5"/>
+                        <circle cx="64" cy="45" r="16" fill="#7DD3FC" stroke="#D97706" stroke-width="5"/>
+                        <rect x="48" y="41" width="4" height="8" fill="#D97706"/>
+                        <circle cx="38" cy="45" r="6" fill="#0F172A"/>
+                        <circle cx="62" cy="45" r="6" fill="#0F172A"/>
+                        <circle cx="40" cy="43" r="2" fill="#FFFFFF"/>
+                        <circle cx="64" cy="43" r="2" fill="#FFFFFF"/>
+                        <path d="M 32 68 Q 50 82 68 68" stroke="#0F172A" stroke-width="4" stroke-linecap="round" fill="#FFFFFF"/>
+                    </svg>
+                    
+                    <h1 class="display-6 fw-bold text-dark mb-1">IniciaME</h1>
+                    <p class="text-primary fw-bold mb-3 fs-5">TM Executor</p>
+                    <p class="text-muted mx-auto" style="max-width: 650px;">
+                        Welcome to the centralized automated test execution platform powered by <strong>UiPath Test Manager</strong>.
+                    </p>
+                </div>
+
+                <h4 class="fw-bold mb-3 text-dark"><i class="bi bi-rocket-takeoff me-2 text-primary"></i>Getting Started Guide</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <div class="badge bg-warning-subtle text-warning-emphasis mb-2 px-3 py-2 fs-6 rounded-pill">Step 1</div>
+                                <h5 class="fw-bold">Authenticate Token</h5>
+                                <p class="text-muted small">Provide a valid Bearer Token to enable seamless API communication.</p>
+                                <button class="btn btn-outline-warning text-dark btn-sm mt-2" onclick="promptTokenModal()">Enter Token <i class="bi bi-key"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <div class="badge bg-primary-subtle text-primary mb-2 px-3 py-2 fs-6 rounded-pill">Step 2</div>
+                                <h5 class="fw-bold">Configure Environment</h5>
+                                <p class="text-muted small">Enter your UiPath Organization and Tenant in the configuration section. Available Test Projects will then be loaded automatically for selection.</p>
+                                <button class="btn btn-outline-primary btn-sm mt-2" onclick="navigateToConfig()">Go to Config <i class="bi bi-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <div class="badge bg-success-subtle text-success mb-2 px-3 py-2 fs-6 rounded-pill">Step 3</div>
+                                <h5 class="fw-bold">Execute & Export</h5>
+                                <p class="text-muted small">Select your Test Cases or Test Sets, trigger runs, and export execution reports to PDF.</p>
+                                <button class="btn btn-outline-success btn-sm mt-2" onclick="switchTab('testCasesView', document.querySelectorAll('#sidebarMenu .nav-link')[1])">View Test Cases <i class="bi bi-play-circle"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 1: TEST CASES -->
+            <div id="testCasesView" class="view-section">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2 fw-bold text-dark">Test Cases</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" class="btn btn-outline-primary me-2" onclick="loadTestCases()">
+                            <i class="bi bi-arrow-clockwise"></i> Refresh
+                        </button>
+                        <button type="button" class="btn btn-primary shadow-sm" onclick="runSelectedTests()">
+                            <i class="bi bi-play-fill"></i> Run Selected (<span id="selectedCount">0</span>)
+                        </button>
+                    </div>
+                </div>
+
+			<div class="row g-3 mb-4">
+				<div class="col">
+					<div class="card border-0 shadow-sm border-start border-4 border-primary h-100">
+						<div class="card-body p-3">
+							<div class="text-muted small">Total Test Cases</div>
+							<div class="fs-4 fw-bold" id="totalTestCasesCount">0</div>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card border-0 shadow-sm border-start border-4 border-info h-100">
+						<div class="card-body p-3">
+							<div class="text-muted small">Selected to Run</div>
+							<div class="fs-4 fw-bold text-info" id="selectedTestCasesCount">0</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold">Available Test Cases</h5>
+                        <div class="input-group style-search" style="width: 280px;">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
+                            <input type="text" id="searchInput" class="form-control bg-light border-start-0" placeholder="Filter TestCases..." onkeyup="filterTable('tcTableBody', this.value)">
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="tcTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 40px;">
+                                        <input class="form-check-input" type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                                    </th>
+                                    <th>Key</th>
+                                    <th>Test Case Name</th>
+                                    <th>Description</th>
+                                    <th>Automation Project</th>
+                                    <th>Updated</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tcTableBody">
+                                <tr>
+                                    <td colspan="7" class="text-center py-4 text-muted">Please enter a valid Access Token to view Test Cases.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: TEST SETS -->
+            <div id="testSetsView" class="view-section">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2 fw-bold text-dark">Test Sets</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" class="btn btn-outline-primary me-2" onclick="loadTestSets()">
+                            <i class="bi bi-arrow-clockwise"></i> Refresh
+                        </button>
+                        <button type="button" class="btn btn-primary shadow-sm" onclick="runSelectedTestSets()">
+                            <i class="bi bi-play-fill"></i> Run Selected (<span id="selectedTsCount">0</span>)
+                        </button>
+                    </div>
+                </div>
+
+				<div class="row g-3 mb-4">
+					<div class="col">
+						<div class="card border-0 shadow-sm border-start border-4 border-primary h-100">
+							<div class="card-body p-3">
+								<div class="text-muted small">Total Test Sets</div>
+								<div class="fs-4 fw-bold" id="totalTsCount">0</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card border-0 shadow-sm border-start border-4 border-info h-100">
+							<div class="card-body p-3">
+								<div class="text-muted small">Selected to Run</div>
+								<div class="fs-4 fw-bold text-info" id="selectedTsCardCount">0</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold">Configured Test Sets</h5>
+                        <div class="input-group style-search" style="width: 280px;">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control bg-light border-start-0" placeholder="Filter TestSets..." onkeyup="filterTable('tsTableBody', this.value)">
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-v-align mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 40px;">
+                                        <input class="form-check-input" type="checkbox" id="selectAllTs" onclick="toggleSelectAllTs(this)">
+                                    </th>
+                                    <th>Key</th>
+                                    <th>Test Set Name</th>
+                                    <th>Description</th>
+                                    <th>Updated</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tsTableBody">
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">Click Refresh to load Test Sets.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 3: REPORTS & LOGS -->
+            <div id="reportsView" class="view-section">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2 fw-bold text-dark">Reports & Execution Logs</h1>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="clearExecutionsHistory()">
+                        <i class="bi bi-trash"></i> Clear History
+                    </button>
+                </div>
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-list-task me-2 text-primary"></i>Execution History</h5>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="syncAndRefreshTable()">
+                            <i class="bi bi-arrow-clockwise"></i> Sync & Refresh Table
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-v-align mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Target Name</th>
+                                    <th>Execution ID</th>
+                                    <th>Type</th>
+                                    <th>Labels</th>
+                                    <th>Triggered At</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logsTableBody">
+                                <tr>
+                                    <td colspan="7" class="text-center py-4 text-muted">No execution logs recorded.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 4: ENVIRONMENT CONFIG -->
+            <div id="configView" class="view-section">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2 fw-bold text-dark">Environment Configuration</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" class="btn btn-outline-secondary me-2" onclick="promptTokenModal()">
+                            <i class="bi bi-key"></i> Configure Token
+                        </button>
+						<button type="button" class="btn btn-outline-danger" onclick="logoutToken()" title="Clear Token & Logout">
+							<i class="bi bi-box-arrow-right me-1"></i>Exit
+						</button>						
+                    </div>					
+                </div>
+				
+                <div class="card border-0 shadow-sm max-w-lg mb-4">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold text-secondary">Bearer Token Status:</span>
+                            <span id="tokenStatusBadge" class="badge bg-secondary badge-status">No Token</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">Remaining Time (1h validity):</small>
+                            <strong id="tokenTimerDisplay" class="fs-5 font-monospace text-dark">00:00:00</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm max-w-lg">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-sliders me-2 text-primary"></i>UiPath Connection Settings</h5>
+                        <p class="text-muted small mb-4">Configure your UiPath Cloud target parameters below. These parameters are used to route all API calls.</p>
+
+                        <form id="configForm" onsubmit="saveEnvConfig(event)">
+                            <div class="mb-3">
+                                <label for="cfgOrg" class="form-label fw-semibold">Organization Name</label>
+                                <input type="text" class="form-control" id="cfgOrg" placeholder="Inicia.ME" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cfgTenant" class="form-label fw-semibold">Tenant Name</label>
+                                <input type="text" class="form-control" id="cfgTenant" placeholder="DefaultTenant" required>
+                            </div>
+
+							<div class="mb-3">
+								<label for="cfgProject" class="form-label fw-semibold">Test Project</label>
+								<div class="input-group">
+									<select class="form-select" id="cfgProject" required onchange="handleProjectChange(this)">
+										<option value="">-- Click Fetch Projects First --</option>
+									</select>
+									<button class="btn btn-outline-primary" type="button" onclick="fetchTestProjects()">
+										<i class="bi bi-arrow-clockwise me-1"></i>
+									</button>
+								</div>
+							</div>
+
+                            <button type="submit" class="btn btn-primary fw-bold">
+                                <i class="bi bi-save me-1"></i> Save Configuration
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- ACCESS TOKEN MODAL -->
+<div class="modal fade" id="tokenModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="tokenModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title fw-bold" id="tokenModalLabel"><i class="bi bi-shield-lock me-2"></i>Access Required</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form id="tokenForm" onsubmit="saveToken(event)">
+          <div class="mb-3">
+            <label for="tokenInput" class="form-label fw-semibold">Bearer Token</label>
+            <input type="password" class="form-control" id="tokenInput" placeholder="eyJhbGciOi..." required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 fw-bold mb-3">
+            <i class="bi bi-check-circle me-1"></i> Validate & Connect
+          </button>
+        </form>
+
+        <div class="alert alert-warning border-0 bg-warning-subtle text-warning-emphasis p-3 mb-2" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> To access this dashboard, please request an active <strong>Bearer Token</strong> from <a href="mailto:Samuel@Inicia.ME" class="fw-bold text-decoration-underline text-warning-emphasis">Samuel@Inicia.ME</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const DEFAULT_CONFIG = {
+        ORGANIZATION: 'YOUR_ORGANIZATION',
+        TENANT: 'YOUR_TENANT',
+        TEST_PROJECT: 'YOUR_PROJECT_ID'
+    };
+
+    let tokenTimerInterval = null;
+    let tokenModalObj;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        tokenModalObj = new bootstrap.Modal(document.getElementById('tokenModal'));
+        loadEnvConfigToInputs();
+        checkTokenAndInit();
+    });
+
+    function getEnvConfig() {
+        return {
+            ORGANIZATION: localStorage.getItem('cfg_org') || DEFAULT_CONFIG.ORGANIZATION,
+            TENANT: localStorage.getItem('cfg_tenant') || DEFAULT_CONFIG.TENANT,
+            TEST_PROJECT: localStorage.getItem('cfg_project') || DEFAULT_CONFIG.TEST_PROJECT
+        };
+    }
+
+    function loadEnvConfigToInputs() {
+        const cfg = getEnvConfig();
+        document.getElementById('cfgOrg').value = cfg.ORGANIZATION !== 'YOUR_ORGANIZATION' ? cfg.ORGANIZATION : '';
+        document.getElementById('cfgTenant').value = cfg.TENANT !== 'YOUR_TENANT' ? cfg.TENANT : '';
+        document.getElementById('cfgProject').value = cfg.TEST_PROJECT !== 'YOUR_PROJECT_ID' ? cfg.TEST_PROJECT : '';
+    }
+
+    function saveEnvConfig(event) {
+        event.preventDefault();
+        const org = document.getElementById('cfgOrg').value.trim();
+        const tenant = document.getElementById('cfgTenant').value.trim();
+        const project = document.getElementById('cfgProject').value.trim();
+
+        localStorage.setItem('cfg_org', org);
+        localStorage.setItem('cfg_tenant', tenant);
+        localStorage.setItem('cfg_project', project);
+
+        showAlert('Environment configuration saved successfully!', 'success');
+    }
+
+    function switchTab(viewId, element) {
+        document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
+        document.querySelectorAll('#sidebarMenu .nav-link').forEach(link => link.classList.remove('active'));
+
+        document.getElementById(viewId).classList.add('active');
+        if(element) element.classList.add('active');
+
+        const menuCollapse = document.getElementById('sidebarMenuCollapse');
+        if (menuCollapse && menuCollapse.classList.contains('show')) {
+            bootstrap.Collapse.getInstance(menuCollapse).hide();
+        }
+
+        if (viewId === 'testCasesView') loadTestCases();
+        if (viewId === 'testSetsView') loadTestSets();
+        if (viewId === 'reportsView') loadExecutionLogs();
+    }
+
+    function navigateToConfig() {
+        const configTabBtn = document.querySelectorAll('#sidebarMenu .nav-link')[4];
+        switchTab('configView', configTabBtn);
+    }
+
+    function checkTokenAndInit() {
+        const savedToken = localStorage.getItem('uipath_token');
+        startTokenCountdown();
+
+        if (!savedToken) {
+            promptTokenModal();
+        }
+    }
+
+    function promptTokenModal() {
+        document.getElementById('tokenInput').value = '';
+        if (tokenModalObj) tokenModalObj.show();
+    }
+
+    function saveToken(event) {
+        event.preventDefault();
+        const rawToken = document.getElementById('tokenInput').value.trim();
+        if (!rawToken) return;
+
+        const cleanToken = rawToken.replace(/^Bearer\s+/i, '');
+        localStorage.setItem('uipath_token', cleanToken);
+
+        setTokenTimer();
+
+        if (tokenModalObj) tokenModalObj.hide();
+        showAlert('Token saved successfully. Attempting connection...', 'info');
+    }
+
+    function invalidateSession() {
+        if (tokenTimerInterval) clearInterval(tokenTimerInterval);
+        
+        localStorage.removeItem('uipath_token');
+        localStorage.removeItem('uipath_token_expiration');
+
+        const timerDisplay = document.getElementById('tokenTimerDisplay');
+        const statusBadge = document.getElementById('tokenStatusBadge');
+
+        if (timerDisplay) {
+            timerDisplay.innerText = "00:00:00";
+            timerDisplay.style.color = "#dc3545";
+        }
+        if (statusBadge) {
+            statusBadge.innerText = "EXPIRED";
+            statusBadge.className = "badge bg-danger badge-status";
+        }
+
+        showAlert('La sesión ha expirado. Por favor ingresa un nuevo Bearer Token.', 'warning');
+        promptTokenModal();
+    }
+
+    // ================= EXECUTION HISTORY & PERSISTENCE =================
+
+    function saveExecutionLog(executionId, targetName, targetType) {
+        let executions = JSON.parse(localStorage.getItem('uipath_executions') || '[]');
+        
+        const newRecord = {
+            id: executionId || 'EXEC-' + Date.now().toString().slice(-6),
+            name: targetName,
+            type: targetType,
+            timestamp: new Date().toLocaleString(),
+            status: 'Running',
+            labels: []
+        };
+
+        executions.unshift(newRecord);
+        if (executions.length > 50) executions.pop();
+
+        localStorage.setItem('uipath_executions', JSON.stringify(executions));
+    }
+
+    function loadExecutionLogs() {
+        const tableBody = document.getElementById('logsTableBody');
+        if (!tableBody) return;
+
+        const executions = JSON.parse(localStorage.getItem('uipath_executions') || '[]');
+
+        if (executions.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted">No execution logs recorded.</td></tr>`;
+            return;
+        }
+
+        tableBody.innerHTML = '';
+        
+        executions.forEach((exec) => {
+            const isCompleted = exec.status === 'Passed' || exec.status === 'Completed' || exec.status === 'Finished' || exec.status === 'Failed';
+            
+            let statusBadge = `<span class="badge bg-warning-subtle text-warning border border-warning-subtle"><i class="bi bi-hourglass-split me-1"></i>Running</span>`;
+
+            if (exec.status === 'Passed' || exec.status === 'Completed' || exec.status === 'Finished') {
+                statusBadge = `<span class="badge bg-success-subtle text-success border border-success-subtle"><i class="bi bi-check-circle me-1"></i>Passed</span>`;
+            } else if (exec.status === 'Failed') {
+                statusBadge = `<span class="badge bg-danger-subtle text-danger border border-danger-subtle"><i class="bi bi-x-circle me-1"></i>Failed</span>`;
+            }
+
+            const typeBadge = exec.type === 'Test Set'
+                ? `<span class="badge" style="background-color: #f3e8ff; color: #6b21a8; border: 1px solid #d8b4fe;"><i class="bi bi-folder2-open me-1"></i>Test Set</span>`
+                : `<span class="badge bg-info-subtle text-info border border-info-subtle"><i class="bi bi-check2-square me-1"></i>Test Case</span>`;
+
+            let labelsHtml = '<span class="text-muted small fst-italic">None</span>';
+            if (exec.labels && exec.labels.length > 0) {
+                labelsHtml = exec.labels.map(lbl => 
+                    `<span class="badge bg-secondary-subtle text-secondary border me-1">
+                        <i class="bi bi-tag-fill me-1"></i>${lbl}
+                        <i class="bi bi-x ms-1" style="cursor:pointer;" onclick="promptUnassignLabel('${exec.id}', '${lbl}')" title="Remove Label"></i>
+                     </span>`
+                ).join('');
+            }
+
+            const pdfButtonAttr = isCompleted 
+                ? `onclick="downloadPdfReport('${exec.id}', '${exec.name}')" title="Download PDF"` 
+                : `disabled title="PDF available after execution finishes"`;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="fw-semibold text-dark">${exec.name}</td>
+                <td><span class="code-inline">${exec.id}</span></td>
+                <td>${typeBadge}</td>
+                <td>${labelsHtml}</td>
+                <td class="small text-muted">${exec.timestamp}</td>
+                <td>${statusBadge}</td>
+                <td class="text-end">
+                    <button class="btn btn-sm btn-outline-secondary me-1" onclick="promptAssignLabel('${exec.id}')" title="Add Label">
+                        <i class="bi bi-tag"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary" ${pdfButtonAttr}>
+                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> PDF
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+	async function syncAndRefreshTable() {
+		const token = localStorage.getItem('uipath_token');
+		const cfg = getEnvConfig();
+	
+		if (!token) return promptTokenModal();
+	
+		let localExecutions = JSON.parse(localStorage.getItem('uipath_executions') || '[]');
+		if (localExecutions.length === 0) {
+			showAlert('No local executions to sync.', 'info');
+			return;
+		}
+	
+		showAlert('Syncing execution statuses and labels with UiPath...', 'info');
+	
+		const headers = {
+			'Authorization': `Bearer ${token}`,
+			'Content-Type': 'application/json',
+			'X-UIPATH-TenantName': cfg.TENANT.trim()
+		};
+	
+		try {
+			const org = encodeURIComponent(cfg.ORGANIZATION.trim());
+			const tenant = encodeURIComponent(cfg.TENANT.trim());
+			const project = encodeURIComponent(cfg.TEST_PROJECT.trim());
+	
+			const updatedExecutions = await Promise.all(localExecutions.map(async (exec) => {
+				if (!exec.id || exec.id.startsWith('EXEC-')) return exec;
+
+                let updatedStatus = exec.status;
+                let updatedDuration = exec.duration;
+                let updatedLabels = exec.labels || [];
+	
+				try {
+					const statsUrl = `https://cloud.uipath.com/${org}/${tenant}/testmanager_/api/v2/${project}/testexecutions/${exec.id}/withStats`;
+					const response = await fetch(statsUrl, { headers });
+	
+					if (response.status === 401 || response.status === 403) {
+						throw new Error('AUTH_ERROR');
+					}
+	
+					if (response.ok) {
+						const stats = await response.json();
+						
+						if (stats.status === 'Finished') {
+							updatedStatus = stats.failed > 0 ? 'Failed' : 'Passed';
+						} else {
+                            updatedStatus = stats.status;
+                        }
+
+                        if (stats.duration) {
+                            updatedDuration = (stats.duration / 1000).toFixed(1) + 's';
+                        }
+					}
+
+                    // Sincronizar Labels
+                    const labelsUrl = `https://cloud.uipath.com/${org}/${tenant}/testmanager_/api/v2/${project}/objectlabels/TestExecution/${exec.id}/all`;
+                    const labelsResponse = await fetch(labelsUrl, { headers });
+                    if (labelsResponse.ok) {
+                        const labelsData = await labelsResponse.json();
+                        updatedLabels = labelsData.map(l => l.name);
+                    }
+
+				} catch (err) {
+					if (err.message === 'AUTH_ERROR') throw err;
+					console.error(`Error syncing ID ${exec.id}:`, err);
+				}
+	
+				return {
+                    ...exec,
+                    status: updatedStatus,
+                    duration: updatedDuration,
+                    labels: updatedLabels
+                };
+			}));
+	
+			localStorage.setItem('uipath_executions', JSON.stringify(updatedExecutions));
+			loadExecutionLogs();
+			showAlert('Execution table updated successfully!', 'success');
+	
+		} catch (error) {
+			if (error.message === 'AUTH_ERROR') {
+				showAlert('Authorization error (403/401). Verify Token.', 'danger');
+				return invalidateSession();
+			}
+			console.error('Error syncing executions:', error);
+			showAlert('Could not retrieve execution stats.', 'danger');
+		}
+	}
+
+    // ================= LABELS MANAGEMENT =================
+
+    async function promptAssignLabel(executionId) {
+        if (!executionId || executionId.startsWith('EXEC-')) {
+            alert('Cannot assign labels to local mock executions.');
+            return;
+        }
+
+        const labelText = prompt('Enter a label name for this execution (e.g. SmokeTest, Regression, UAT):');
+        if (!labelText || !labelText.trim()) return;
+
+        const token = localStorage.getItem('uipath_token');
+        const cfg = getEnvConfig();
+
+        showAlert(`Assigning label "${labelText.trim()}"...`, 'info');
+
+        const url = `https://cloud.uipath.com/${cfg.ORGANIZATION}/${cfg.TENANT}/testmanager_/api/v2/${cfg.TEST_PROJECT}/objectlabels/TestExecution/${executionId}/assign`;
+        
+        const payload = {
+            label: labelText.trim(),
+            objectType: "TestExecution",
+            projectId: cfg.TEST_PROJECT.trim(),
+            correlationId: generateGUID()
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'X-UIPATH-TenantName': cfg.TENANT.trim()
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                showAlert(`Label "${labelText.trim()}" assigned!`, 'success');
+                await syncAndRefreshTable();
+            } else {
+                throw new Error(`HTTP ${response.status}`);
+            }
+        } catch (error) {
+            console.error('Error assigning label:', error);
+            showAlert('Failed to assign label in UiPath.', 'danger');
+        }
+    }
+
+    async function promptUnassignLabel(executionId, labelText) {
+        if (!confirm(`Are you sure you want to remove label "${labelText}"?`)) return;
+
+        const token = localStorage.getItem('uipath_token');
+        const cfg = getEnvConfig();
+
+        showAlert(`Removing label "${labelText}"...`, 'info');
+
+        const url = `https://cloud.uipath.com/${cfg.ORGANIZATION}/${cfg.TENANT}/testmanager_/api/v2/${cfg.TEST_PROJECT}/objectlabels/TestExecution/${executionId}/unassign`;
+        
+        const payload = {
+            label: labelText,
+            objectType: "TestExecution",
+            correlationId: generateGUID()
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'X-UIPATH-TenantName': cfg.TENANT.trim()
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                showAlert(`Label "${labelText}" removed!`, 'info');
+                await syncAndRefreshTable();
+            } else {
+                throw new Error(`HTTP ${response.status}`);
+            }
+        } catch (error) {
+            console.error('Error removing label:', error);
+            showAlert('Failed to remove label.', 'danger');
+        }
+    }
+
+    function clearExecutionsHistory() {
+        if (confirm('Are you sure you want to clear the local execution history?')) {
+            localStorage.removeItem('uipath_executions');
+            loadExecutionLogs();
+            showAlert('Execution history cleared.', 'info');
+        }
+    }
+
+    async function downloadPdfReport(executionId, reportName) {
+        const token = localStorage.getItem('uipath_token');
+        const cfg = getEnvConfig();
+
+        if (!token) return promptTokenModal();
+
+        showAlert(`[1/3] Generating PDF export for ${executionId}...`, 'info');
+
+        try {
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'X-UIPATH-TenantName': cfg.TENANT
+            };
+
+            const exportUrl = `https://cloud.uipath.com/${cfg.ORGANIZATION}/${cfg.TENANT}/testmanager_/api/v2/${cfg.TEST_PROJECT}/testcaselogs/testexecution/${executionId}/export?fileExportType=pdf`;
+            
+            const initResponse = await fetch(exportUrl, { method: 'POST', headers: headers });
+
+            if (initResponse.status === 401 || initResponse.status === 403) {
+                showAlert('Token expired or insufficient permissions.', 'warning');
+                return invalidateSession();
+            }
+
+            if (!initResponse.ok) throw new Error(`Step 1 Error: ${initResponse.status}`);
+
+            const initData = await initResponse.json();
+            const jobId = initData.id;
+
+            if (!jobId) throw new Error('No export job ID received.');
+
+            showAlert(`[2/3] Processing PDF in UiPath...`, 'info');
+            
+            const statusUrl = `https://cloud.uipath.com/${cfg.ORGANIZATION}/${cfg.TENANT}/testmanager_/api/v2/${cfg.TEST_PROJECT}/fileexportjobs/${jobId}/testSet`;
+            
+            let attachmentId = null;
+            let attempts = 0;
+
+            while (attempts < 15) {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const statusResponse = await fetch(statusUrl, { headers: headers });
+                if (statusResponse.ok) {
+                    const statusData = await statusResponse.json();
+                    
+                    if (statusData.fileExportJobStatus === 'Completed' && statusData.attachmentId) {
+                        attachmentId = statusData.attachmentId;
+                        break;
+                    } else if (statusData.fileExportJobStatus === 'Failed') {
+                        throw new Error('UiPath failed to generate PDF export.');
+                    }
+                }
+                attempts++;
+            }
+
+            if (!attachmentId) throw new Error('Timeout waiting for PDF generation.');
+
+            showAlert(`[3/3] Downloading file...`, 'info');
+            
+            const downloadUrl = `https://cloud.uipath.com/${cfg.ORGANIZATION}/${cfg.TENANT}/testmanager_/api/v2/${cfg.TEST_PROJECT}/attachments/explorationResult/${attachmentId}/download`;
+            
+            const fileResponse = await fetch(downloadUrl, {
+                method: 'GET',
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'X-UIPATH-TenantName': cfg.TENANT 
+                }
+            });
+
+            if (!fileResponse.ok) throw new Error(`Download error: ${fileResponse.status}`);
+
+            const blob = await fileResponse.blob();
+            const blobUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            
+            const sanitizedName = reportName.replace(/[^a-zA-Z0-9_-]/g, '_');
+            link.href = blobUrl;
+            link.download = `Report_${sanitizedName}_${executionId.slice(-6)}.pdf`;
+            
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(blobUrl);
+
+            showAlert('PDF downloaded successfully!', 'success');
+
+        } catch (error) {
+            console.error('PDF export error:', error);
+            showAlert(`PDF download error: ${error.message}`, 'danger');
+        }
+    }
+
+    // ================= API CALLS =================
+
+    async function loadTestCases() {
+        const rawToken = localStorage.getItem('uipath_token');
+        if (!rawToken) return promptTokenModal();
+
+        const token = rawToken.trim().replace(/^Bearer\s+/i, '').replace(/[\r\n]/g, '');
+        const cfg = getEnvConfig();
+        showAlert('Loading Test Cases...', 'info');
+        const tableBody = document.getElementById('tcTableBody');
+
+        const org = encodeURIComponent(cfg.ORGANIZATION.trim());
+        const tenant = encodeURIComponent(cfg.TENANT.trim());
+        const project = encodeURIComponent(cfg.TEST_PROJECT.trim());
+
+        const url = `https://cloud.uipath.com/${org}/${tenant}/testmanager_/api/v2/${project}/testcases?top=100&orderby=updated desc`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'X-UIPATH-TenantName': cfg.TENANT.trim()
+                }
+            });
+
+            if (response.status === 401 || response.status === 403) {
+                showAlert(`Error de autorización (${response.status}). Revisa el Token y la Configuración.`, 'danger');
+                return invalidateSession();
+            }
+
+            if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+
+            const responseData = await response.json();
+            const testCases = responseData.data || [];
+
+            tableBody.innerHTML = '';
+            
+            const totalEl = document.getElementById('totalTestCasesCount');
+            if (totalEl) totalEl.innerText = testCases.length;
+
+            if (testCases.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted">No Test Cases found.</td></tr>`;
+                hideAlert();
+                return;
+            }
+
+            testCases.forEach(tc => {
+                const description = tc.description && tc.description.trim() !== '' 
+                    ? tc.description 
+                    : '<span class="text-muted fst-italic">No description provided</span>';
+
+                const automationProject = tc.automationProjectName 
+                    ? `<span class="badge bg-primary-subtle text-primary border border-primary-subtle"><i class="bi bi-folder2-open me-1"></i>${tc.automationProjectName}</span>`
+                    : `<span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle"><i class="bi bi-hand-index-fill me-1"></i>Manual</span>`;
+
+                const updatedDate = tc.updated ? new Date(tc.updated).toLocaleDateString() : 'N/A';
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input class="form-check-input test-checkbox" type="checkbox" value="${tc.id}" data-name="${tc.name}" onchange="updateCount()"></td>
+                    <td><span class="code-inline">${tc.objKey || 'N/A'}</span></td>
+                    <td class="fw-semibold text-dark">${tc.name}</td>
+                    <td class="small text-secondary text-truncate" style="max-width: 200px;" title="${tc.description || ''}">${description}</td>
+                    <td>${automationProject}</td>
+                    <td class="small text-muted">${updatedDate}</td>
+                    <td class="text-end">
+                        <button class="btn btn-sm btn-outline-primary" onclick="runSingleTestCase('${tc.id}', '${tc.name}')">
+                            <i class="bi bi-play-fill"></i> Run
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            hideAlert();
+
+        } catch (error) {
+            console.error('Error detallado en fetch:', error);
+            showAlert(`Error de red o CORS: ${error.message}`, 'danger');
+        }
+    }
+
+    async function loadTestSets() {
+        const token = localStorage.getItem('uipath_token');
+        if (!token) return promptTokenModal();
+
+        const cfg = getEnvConfig();
+        showAlert('Loading Test Sets...', 'info');
+        const tableBody = document.getElementById('tsTableBody');
+
+        const url = `https://cloud.uipath.com/${cfg.ORGANIZATION}/${cfg.TENANT}/testmanager_/api/v2/${cfg.TEST_PROJECT}/testsets?orderby=updated desc`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'X-UIPATH-TenantName': cfg.TENANT
+                }
+            });
+
+            if (response.status === 401 || response.status === 403) {
+                showAlert(`Authorization error (${response.status}) in Test Sets. Check Config/Token.`, 'danger');
+                return invalidateSession();
+            }
+
+            if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+
+            const responseData = await response.json();
+            const testSets = responseData.data || [];
+
+            tableBody.innerHTML = '';
+            const totalTsEl = document.getElementById('totalTsCount');
+            if (totalTsEl) totalTsEl.innerText = testSets.length;
+            
+            let automatedTsCount = 0;
+
+            if (testSets.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">No Test Sets found for this project.</td></tr>`;
+                if (document.getElementById('automatedTsCount')) document.getElementById('automatedTsCount').innerText = 0;
+                if (document.getElementById('idleTsCount')) document.getElementById('idleTsCount').innerText = 0;
+                hideAlert();
+                return;
+            }
+
+            testSets.forEach(ts => {
+                if (ts.isAutomated !== false) automatedTsCount++;
+
+                const row = document.createElement('tr');
+                const updatedDate = ts.updated ? new Date(ts.updated).toLocaleDateString() : 'N/A';
+
+                row.innerHTML = `
+                    <td><input class="form-check-input ts-checkbox" type="checkbox" value="${ts.id}" data-name="${ts.name}" onchange="updateTsCount()"></td>
+                    <td><span class="code-inline">${ts.objKey || 'N/A'}</span></td>
+                    <td class="fw-semibold text-dark">${ts.name}</td>
+                    <td class="text-muted small">${ts.description || 'No description provided.'}</td>
+                    <td class="small text-muted">${updatedDate}</td>
+                    <td class="text-end">
+                        <button class="btn btn-sm btn-outline-primary" onclick="runTestSet('${ts.id}', '${ts.name}')">
+                            <i class="bi bi-play-fill"></i> Run Set
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            if (document.getElementById('automatedTsCount')) document.getElementById('automatedTsCount').innerText = automatedTsCount;
+            if (document.getElementById('idleTsCount')) document.getElementById('idleTsCount').innerText = testSets.length - automatedTsCount;
+
+            hideAlert();
+
+        } catch (error) {
+            console.error('Error loading Test Sets:', error);
+            showAlert('Failed to retrieve Test Sets. Check target project and token.', 'danger');
+        }
+    }
+
+    async function runSelectedTests() {
+        const checkboxes = document.querySelectorAll('.test-checkbox:checked');
+        const selectedIds = Array.from(checkboxes).map(cb => cb.value);
+
+        if (selectedIds.length === 0) {
+            alert('Please select at least one Test Case to execute.');
+            return;
+        }
+
+        await executeTestCasesApi(selectedIds, `Batch of ${selectedIds.length} Test Cases`);
+    }
+
+    async function runSelectedTestSets() {
+        const checkboxes = document.querySelectorAll('.ts-checkbox:checked');
+        if (checkboxes.length === 0) {
+            alert('Please select at least one Test Set to execute.');
+            return;
+        }
+
+        for (const cb of checkboxes) {
+            await runTestSet(cb.value, cb.getAttribute('data-name'));
+        }
+    }
+
+    async function runSingleTestCase(testCaseId, testCaseName) {
+        if (confirm(`Do you want to start execution for Test Case:\n"${testCaseName}"?`)) {
+            await executeTestCasesApi([testCaseId], testCaseName);
+        }
+    }
+
+    async function runTestSet(testSetId, testSetName) {
+        if (confirm(`Do you want to start execution for Test Set:\n"${testSetName}"?`)) {
+            const token = localStorage.getItem('uipath_token');
+            const cfg = getEnvConfig();
+
+            showAlert(`Triggering Test Set "${testSetName}"...`, 'info');
+            const executeUrl = `https://cloud.uipath.com/${cfg.ORGANIZATION}/${cfg.TENANT}/testmanager_/api/v2/${cfg.TEST_PROJECT}/testsets/${testSetId}/startexecute?executionType=Automated&asyncMode=true`;
+
+            try {
+                const response = await fetch(executeUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                        'X-UIPATH-TenantName': cfg.TENANT
+                    }
+                });
+
+                if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+                
+                const responseData = await response.json();
+                const executionId = responseData.id || responseData.executionId || 'EXEC-' + Date.now().toString().slice(-6);
+
+                saveExecutionLog(executionId, testSetName, 'Test Set');
+                showAlert(`Test Set "${testSetName}" submitted for execution (ID: ${executionId})!`, 'success');
+
+            } catch (error) {
+                console.error('Test Set execution error:', error);
+                showAlert('Failed to trigger Test Set execution.', 'danger');
+            }
+        }
+    }
+
+    function generateGUID() {
+        return 'crypto' in window && 'randomUUID' in crypto 
+            ? crypto.randomUUID() 
+            : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+    }
+
+    async function executeTestCasesApi(idsArray, executionLabel = 'Test Case Execution') {
+        const token = localStorage.getItem('uipath_token');
+        if (!token) return promptTokenModal();
+
+        const cfg = getEnvConfig();
+        showAlert(`Triggering asynchronous execution for ${idsArray.length} Test Case(s)...`, 'info');
+        const executeUrl = `https://cloud.uipath.com/${cfg.ORGANIZATION}/${cfg.TENANT}/testmanager_/api/v2/${cfg.TEST_PROJECT}/testcases/startexecute?executionType=Automated&asyncMode=true`;
+
+        const payload = {
+            name: `MFP:${idsArray.length}`,
+            testCaseIds: idsArray,
+            correlationId: generateGUID()
+        };
+
+        try {
+            const response = await fetch(executeUrl, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'X-UIPATH-TenantName': cfg.TENANT
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.status === 401 || response.status === 403) {
+                showAlert('Authorization error during execution.', 'danger');
+                return invalidateSession();
+            }
+
+            if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+
+            const responseData = await response.json();
+            const executionId = responseData.id || responseData.executionId || 'EXEC-' + Date.now().toString().slice(-6);
+
+            saveExecutionLog(executionId, executionLabel, 'Test Case');
+            showAlert(`Execution submitted successfully (ID: ${executionId})!`, 'success');
+
+        } catch (error) {
+            console.error('Execution error:', error);
+            showAlert('Failed to trigger execution in UiPath.', 'danger');
+        }
+    }
+
+    // ================= INTERFACE UTILS =================
+
+    function toggleSelectAll(source) {
+        let checkboxes = document.querySelectorAll('.test-checkbox');
+        checkboxes.forEach(cb => cb.checked = source.checked);
+        updateCount();
+    }
+
+    function toggleSelectAllTs(source) {
+        let checkboxes = document.querySelectorAll('.ts-checkbox');
+        checkboxes.forEach(cb => cb.checked = source.checked);
+        updateTsCount();
+    }
+
+    function updateCount() {
+        let selected = document.querySelectorAll('.test-checkbox:checked').length;
+        
+        const selCountEl = document.getElementById('selectedCount');
+        if (selCountEl) selCountEl.innerText = selected;
+
+        const selCardEl = document.getElementById('selectedTestCasesCount');
+        if (selCardEl) selCardEl.innerText = selected;
+    }
+
+    function updateTsCount() {
+        let selected = document.querySelectorAll('.ts-checkbox:checked').length;
+        
+        const selTsEl = document.getElementById('selectedTsCount');
+        if (selTsEl) selTsEl.innerText = selected;
+
+        const selTsCardEl = document.getElementById('selectedTsCardCount');
+        if (selTsCardEl) selTsCardEl.innerText = selected;
+    }
+
+    function filterTable(tbodyId, query) {
+        const rows = document.querySelectorAll(`#${tbodyId} tr`);
+        rows.forEach(row => {
+            const text = row.innerText.toLowerCase();
+            row.style.display = text.includes(query.toLowerCase()) ? '' : 'none';
+        });
+    }
+
+    function showAlert(msg, type) {
+        const alertBox = document.getElementById('alertMessage');
+        const alertText = document.getElementById('alertText');
+        if (alertBox && alertText) {
+            alertBox.className = `alert alert-${type} alert-dismissible fade show`;
+            alertText.innerText = msg;
+            alertBox.classList.remove('d-none');
+        }
+    }
+
+    function hideAlert() {
+        const alertBox = document.getElementById('alertMessage');
+        if (alertBox) alertBox.classList.add('d-none');
+    }
+
+    // ================= TIMER =================
+
+    function setTokenTimer() {
+        const now = new Date().getTime();
+        const ONE_HOUR_MS = 60 * 60 * 1000;
+        const expirationTimestamp = now + ONE_HOUR_MS;
+
+        localStorage.setItem('uipath_token_expiration', expirationTimestamp);
+        startTokenCountdown();
+    }
+
+    function startTokenCountdown() {
+        if (tokenTimerInterval) clearInterval(tokenTimerInterval);
+
+        function updateDisplay() {
+            const storedExpiration = localStorage.getItem('uipath_token_expiration');
+            const timerDisplay = document.getElementById('tokenTimerDisplay');
+            const statusBadge = document.getElementById('tokenStatusBadge');
+
+            if (!storedExpiration) {
+                if (timerDisplay) timerDisplay.innerText = "00:00:00";
+                if (statusBadge) {
+                    statusBadge.innerText = "No Token";
+                    statusBadge.className = "badge bg-secondary badge-status";
+                }
+                return;
+            }
+
+            const currentTime = new Date().getTime();
+            const distance = parseInt(storedExpiration, 10) - currentTime;
+
+            if (distance <= 0) {
+                invalidateSession(); 
+                return;
+            }
+
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (timerDisplay) {
+                timerDisplay.innerText = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+
+            if (statusBadge) {
+                if (distance < 5 * 60 * 1000) { 
+                    statusBadge.innerText = "Expiring Soon";
+                    statusBadge.className = "badge bg-warning text-dark badge-status";
+                    if (timerDisplay) timerDisplay.style.color = "#fd7e14";
+                } else {
+                    statusBadge.innerText = "Active";
+                    statusBadge.className = "badge bg-success badge-status";
+                    if (timerDisplay) timerDisplay.style.color = "#198754";
+                }
+            }
+        }
+
+        updateDisplay();
+        tokenTimerInterval = setInterval(updateDisplay, 1000);
+    }
+// ================= LOG OUT =================
+	function logoutToken() {
+		if (tokenTimerInterval) clearInterval(tokenTimerInterval);
+	
+		// Remove token and its expiration time
+		localStorage.removeItem('uipath_token');
+		localStorage.removeItem('uipath_token_expiration');
+	
+		// Reset visual indicators for Token
+		const timerDisplay = document.getElementById('tokenTimerDisplay');
+		const statusBadge = document.getElementById('tokenStatusBadge');
+	
+		if (timerDisplay) {
+			timerDisplay.innerText = "00:00:00";
+			timerDisplay.style.color = "#6c757d";
+		}
+	
+		if (statusBadge) {
+			statusBadge.innerText = "No Token";
+			statusBadge.className = "badge bg-secondary badge-status";
+		}
+	
+		showAlert(
+			'You have logged out. Bearer Token and Tenant/Project configurations have been removed.',
+			'info'
+		);
+	
+		promptTokenModal();
+	}	
+
+
+// ================= TEST PROJECTS =================
+
+	async function fetchTestProjects() {
+		// 1. Synchronize visible inputs
+		const orgInput = document.getElementById('cfgOrg');
+		const tenantInput = document.getElementById('cfgTenant');
+	
+		if (orgInput && orgInput.value.trim()) {
+			localStorage.setItem('cfg_org', orgInput.value.trim());
+		}
+		if (tenantInput && tenantInput.value.trim()) {
+			localStorage.setItem('cfg_tenant', tenantInput.value.trim());
+		}
+	
+		const token = localStorage.getItem('uipath_token');
+		const orgName = localStorage.getItem('cfg_org');
+		const tenantName = localStorage.getItem('cfg_tenant');
+	
+		if (!token || !orgName || !tenantName) {
+			showAlert('Missing configuration data (Token, Org, or Tenant).', 'warning');
+			return;
+		}
+	
+		const url = `https://cloud.uipath.com/${orgName}/${tenantName}/testmanager_/api/projects`;
+	
+		try {
+			const response = await fetch(url, {
+				method: 'GET',
+				headers: {
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json'
+				}
+			});
+	
+			if (!response.ok) {
+				throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
+			}
+	
+			const jsonResponse = await response.json();
+			console.log('Response received:', jsonResponse);
+			
+			// Ensure it is always a valid array
+			const projectsList = Array.isArray(jsonResponse.data) ? jsonResponse.data : [];
+			
+			populateProjectsDropdown(projectsList);
+			showAlert('Test Projects loaded successfully.', 'success');
+	
+		} catch (error) {
+			// Print exact error to console for debugging
+			console.error('Detailed error in fetchTestProjects:', error);
+			showAlert('Could not retrieve Test Projects from Test Manager.', 'danger');
+		}
+	}
+	
+	function populateProjectsDropdown(projects) {
+		const projectSelect = document.getElementById('cfgProject');
+		if (!projectSelect) {
+			console.error('HTML element #cfgProject was not found');
+			return;
+		}
+	
+		projectSelect.innerHTML = '<option value="">-- Select Project --</option>';
+	
+		if (!Array.isArray(projects) || projects.length === 0) {
+			console.warn('Projects list is empty or not an Array');
+			return;
+		}
+	
+		projects.forEach(project => {
+			const option = document.createElement('option');
+			option.value = project.id || ''; 
+			option.textContent = project.name || 'Unnamed Project'; 
+			projectSelect.appendChild(option);
+		});
+	
+		const savedProjectId = localStorage.getItem('cfg_project');
+		if (savedProjectId) {
+			projectSelect.value = savedProjectId;
+		}
+	}
+</script>
+</body>
+<!-- Elaborated by Samuel Betancourt | GitHub: Leumas80
+     If this HTML is used as a foundation for further development, please retain reference to the original author.
+-->
+</html>
