@@ -1,0 +1,2217 @@
+{
+  "info": {
+    "_postman_id": "f952a12a-df56-46ff-afd5-be92abafda00",
+    "name": "TM Executor",
+    "description": "# 🚀 TM Executor\n\n**Version:** 1.0.0  \nCollection developed by Samuel Betancourt | GitHub: [@Leumas80](https://github.com/leumas80)\n\n## UiPath Test Manager API — Exploratory Collection\n\nExplore, validate, and demonstrate integration with UiPath Test Manager APIs through a structured Postman collection.\n\n---\n\n### Disclaimer\n\n- UiPath Test Manager APIs, endpoints, trademarks, and related intellectual property referenced by this project remain the property of UiPath.\n    \n- This independently developed Postman collection is not an official UiPath product or collection.\n    \n- This project is intended strictly for integration and exploratory purposes and is not affiliated with, sponsored by, or officially endorsed by UiPath.\n    \n\n---\n\n### 🌐 UiPath Cloud Routing Variables\n\n- **Organization:** Your organization name as it appears in the Automation Cloud URL.\n    \n    - Example: `https://cloud.uipath.com/{Organization}/...`\n        \n- **Tenant:** The target Tenant name (e.g., `DefaultTenant`).\n    \n    - Example: `https://cloud.uipath.com/{Organization}/{Tenant}/...`\n        \n\n📖 **Official Reference:** [UiPath API Endpoint URL Structure](https://docs.uipath.com/automation-cloud/automation-cloud/latest/api-guide/api-endpoint-url-structure)\n\n---\n\n### 📚 Documentation Sources & Swagger\n\n- **Swagger UI:**  \n    `https://cloud.uipath.com/{Organization}/{Tenant}/testmanager_/swagger/index.html`\n    \n\n📖 **Official Reference:** [UiPath Test Manager Docs](https://docs.uipath.com/test-manager/automation-cloud/latest/user-guide/test-manager-api)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57604048",
+    "_collection_link": "https://go.postman.co/collection/57604048-f952a12a-df56-46ff-afd5-be92abafda00?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "00 - Setup",
+      "item": [
+        {
+          "name": "TM - 00 Get Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"TM - Get Token : Status 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"TM - Get Token : Access token received\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"access_token\");\r",
+                  "    pm.expect(response.access_token).to.be.a(\"string\");\r",
+                  "    pm.expect(response.access_token).to.not.be.empty;\r",
+                  "});\r",
+                  "\r",
+                  "pm.collectionVariables.set(\"Token\", response.access_token);\r",
+                  "\r",
+                  "console.log(\"🔑 Token successfully generated and stored.\");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text",
+                  "uuid": "17043bb6-fa88-4c1d-9625-690594323346"
+                },
+                {
+                  "key": "client_id",
+                  "value": "{{ClientID}}",
+                  "type": "text",
+                  "uuid": "bedbbc66-f87b-47b1-acbb-dbce0e59008d",
+                  "description": "Required for Token Request"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "{{ClientSecret}}",
+                  "type": "text",
+                  "uuid": "c32bc3a4-73e1-40b7-b3e5-43c73acb893c",
+                  "description": "Required for Token Request"
+                },
+                {
+                  "key": "scope",
+                  "value": "",
+                  "type": "text",
+                  "uuid": "f1944eb4-f938-484b-af59-ae7240a952cf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "https://cloud.uipath.com/identity_/connect/token",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "identity_",
+                "connect",
+                "token"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text",
+                      "uuid": "17043bb6-fa88-4c1d-9625-690594323346"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "{{ClientID}}",
+                      "type": "text",
+                      "uuid": "bedbbc66-f87b-47b1-acbb-dbce0e59008d",
+                      "description": "Required for Token Request"
+                    },
+                    {
+                      "key": "client_secret",
+                      "value": "{{ClientSecret}}",
+                      "type": "text",
+                      "uuid": "c32bc3a4-73e1-40b7-b3e5-43c73acb893c",
+                      "description": "Required for Token Request"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "f1944eb4-f938-484b-af59-ae7240a952cf"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://cloud.uipath.com/identity_/connect/token",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "identity_",
+                    "connect",
+                    "token"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\r\n    \"access_token\": \"Invalid-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\r\n    \"expires_in\": 3600,\r\n    \"token_type\": \"Bearer\",\r\n    \"scope\": \"TM.Administration TM.Administration.Read TM.Administration.Write TM.Attachments TM.Attachments.Read TM.Attachments.Write TM.CustomFieldDefinitions TM.CustomFieldDefinitions.Read TM.CustomFieldDefinitions.Write TM.CustomFieldValues TM.CustomFieldValues.Read TM.CustomFieldValues.Write TM.Defects TM.Defects.Read TM.Defects.Write TM.Maintenance TM.Maintenance.Read TM.Maintenance.Write TM.ObjectLabels TM.ObjectLabels.Read TM.ObjectLabels.Write TM.PerformanceScenarioExecutions TM.PerformanceScenarioExecutions.Read TM.PerformanceScenarioExecutions.Write TM.PerformanceScenarios TM.PerformanceScenarios.Read TM.PerformanceScenarios.Write TM.Projects TM.Projects.Read TM.Projects.Write TM.Prompts TM.Prompts.Read TM.Prompts.Write TM.Requirements TM.Requirements.Read TM.Requirements.Write TM.TestCases TM.TestCases.Read TM.TestCases.Write TM.TestExecutions TM.TestExecutions.Read TM.TestExecutions.Write TM.TestSets TM.TestSets.Read TM.TestSets.Write TM.Users TM.Users.Read TM.Users.Write\"\r\n}"
+            },
+            {
+              "name": "400",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text",
+                      "uuid": "17043bb6-fa88-4c1d-9625-690594323346"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "{{ClientID}}",
+                      "type": "text",
+                      "uuid": "bedbbc66-f87b-47b1-acbb-dbce0e59008d",
+                      "description": "Required for Token Request"
+                    },
+                    {
+                      "key": "client_secret",
+                      "value": "{{ClientSecret}}",
+                      "type": "text",
+                      "uuid": "c32bc3a4-73e1-40b7-b3e5-43c73acb893c",
+                      "description": "Required for Token Request"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "Something Strange Here",
+                      "type": "text",
+                      "uuid": "f1944eb4-f938-484b-af59-ae7240a952cf"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://cloud.uipath.com/identity_/connect/token",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "identity_",
+                    "connect",
+                    "token"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "{\r\n    \"error\": \"invalid_scope\"\r\n}"
+            },
+            {
+              "name": "400",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials",
+                      "type": "text",
+                      "uuid": "17043bb6-fa88-4c1d-9625-690594323346"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "{{ClientID}}",
+                      "type": "text",
+                      "uuid": "bedbbc66-f87b-47b1-acbb-dbce0e59008d",
+                      "description": "Required for Token Request"
+                    },
+                    {
+                      "key": "client_secret",
+                      "value": "WrongValue",
+                      "type": "text",
+                      "uuid": "c32bc3a4-73e1-40b7-b3e5-43c73acb893c",
+                      "description": "Required for Token Request"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "f1944eb4-f938-484b-af59-ae7240a952cf"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://cloud.uipath.com/identity_/connect/token",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "identity_",
+                    "connect",
+                    "token"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "{\r\n    \"error\": \"invalid_client\"\r\n}"
+            }
+          ]
+        },
+        {
+          "name": "TM - 01 Get  Tenant",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "if (Array.isArray(response.tenants) && response.tenants.length > 0) {\r",
+                  "    const tenantName = response.tenants[0].name;\r",
+                  "    pm.collectionVariables.set(\"Tenant\", tenantName);\r",
+                  "    console.log(\"🥇 Tenant found and saved:\", tenantName);\r",
+                  "} else {\r",
+                  "    console.warn(\"⚠️ No tenants found in the response.\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/portal_/api/filtering/leftnav/tenantsAndOrganizationInfo",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "portal_",
+                "api",
+                "filtering",
+                "leftnav",
+                "tenantsAndOrganizationInfo"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/portal_/api/filtering/leftnav/tenantsAndOrganizationInfo",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "portal_",
+                    "api",
+                    "filtering",
+                    "leftnav",
+                    "tenantsAndOrganizationInfo"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "{\r\n    \"organization\": {\r\n        \"name\": \"testinthpqtj\",\r\n        \"accountLanguage\": \"en\",\r\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n        \"accountServices\": [\r\n            \"docs\",\r\n            \"roboticsops\",\r\n            \"assistant\",\r\n            \"academy\",\r\n            \"marketplace\",\r\n            \"apps\",\r\n            \"studio\",\r\n            \"agents\",\r\n            \"home\"\r\n        ],\r\n        \"resourceCenterHidden\": false,\r\n        \"trialServices\": [],\r\n        \"country\": \"Venezuela\",\r\n        \"region\": \"America\"\r\n    },\r\n    \"tenants\": [\r\n        {\r\n            \"name\": \"IniciaME\",\r\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"color\": \"#87bfff\",\r\n            \"enabledServices\": [\r\n                \"actions\",\r\n                \"agenticorchestration\",\r\n                \"connections\",\r\n                \"dataservice\",\r\n                \"orchestrator\",\r\n                \"testmanager\",\r\n                \"docs\",\r\n                \"roboticsops\",\r\n                \"assistant\",\r\n                \"academy\",\r\n                \"marketplace\",\r\n                \"apps\",\r\n                \"studio\",\r\n                \"agents\",\r\n                \"home\"\r\n            ],\r\n            \"isCanaryTenant\": false,\r\n            \"region\": \"America\"\r\n        }\r\n    ],\r\n    \"userGroups\": [\r\n        \"00000000-0000-0000-0000-000000000000\"\r\n    ],\r\n    \"isAdmin\": false\r\n}"
+            },
+            {
+              "name": "401",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/portal_/api/filtering/leftnav/tenantsAndOrganizationInfo",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "portal_",
+                    "api",
+                    "filtering",
+                    "leftnav",
+                    "tenantsAndOrganizationInfo"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "jwt expired"
+            }
+          ]
+        },
+        {
+          "name": "TM Server Info",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseJson = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"TM Server Info - Status 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"TM Server Info - Status OK\", function () {\r",
+                  "    pm.expect(responseJson.status).to.eql(\"OK\");\r",
+                  "});\r",
+                  "\r",
+                  "console.log(\"✅ TM Server Info:\", responseJson);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/serverinfo",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "serverinfo"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/health/live",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "health",
+                    "live"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": "{\r\n    \"version\": \"26.8.0.13134072\",\r\n    \"type\": \"Server\",\r\n    \"status\": \"OK\"\r\n}"
+            }
+          ]
+        },
+        {
+          "name": "TM - 02 Get Project Folder",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "if (response.data && response.data.length > 0) {\r",
+                  "    const project = response.data[0];\r",
+                  "    pm.collectionVariables.set(\"Test_Project\", project.id);\r",
+                  "    console.log(\"✅ Test_Project:\", project.id);\r",
+                  "    console.log(\"✅ Project Name:\", project.name);\r",
+                  "} else {\r",
+                  "    console.error(\"No projects found in response.data\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/projects",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "projects"
+              ]
+            },
+            "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/projects",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "projects"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\r\n    \"data\": [\r\n        {\r\n            \"projectPrefix\": \"MFP\",\r\n            \"isAuthorizationEnabled\": true,\r\n            \"isActive\": true,\r\n            \"isSapConfigured\": false,\r\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"name\": \"MyFirst_TM Project\",\r\n            \"description\": \"\",\r\n            \"created\": \"2026-09-01T20:18:40.737Z\",\r\n            \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"updated\": \"2026-09-01T20:18:40.737Z\",\r\n            \"updatedBy\": \"00000000-0000-0000-0000-000000000000\"\r\n        }\r\n    ],\r\n    \"paging\": {\r\n        \"total\": 1,\r\n        \"page\": 1,\r\n        \"pages\": 1,\r\n        \"pageSize\": 12,\r\n        \"returned\": 1,\r\n        \"previousPage\": false,\r\n        \"nextPage\": false\r\n    }\r\n}"
+            },
+            {
+              "name": "401",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/projects",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "projects"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            }
+          ]
+        }
+      ],
+      "description": "# 📁 00 - Setup\n\nThis folder contains initial environment verification, authentication, and core setup requests required before executing any other collection workflows.\n\n---\n\n#### 🔑 TM - 00 Get Token\n\nFirst mandatory step to authenticate and obtain the Bearer token needed for all subsequent requests in this collection.\n\n- **Method & Endpoint:** `POST` `https://cloud.uipath.com/identity_/connect/token`\n    \n- **Body Type:** `x-www-form-urlencoded`\n    \n- **Required Parameters:**\n    \n    - `grant_type`: `client_credentials`\n        \n    - `client_id`: {{`ClientID`}} _(Required)_\n        \n    - `client_secret`: {{`ClientSecret`}} _(Required)_\n        \n    - `scope`: {{`Scope`}} _(Optional)_\n        \n- **Output:**\n    \n    - Automatically captures and saves the generated `access_token` into the {{`Token`}} collection variable.\n        \n\n📖 **Official Reference:** [UiPath External Applications Guide](https://docs.uipath.com/automation-cloud/automation-cloud/latest/api-guide/accessing-uipath-resources-using-external-applications)\n\n---\n\n#### 🌐 TM - 01 Get Tenant\n\nRetrieves organization metadata and the list of active tenants associated with the current account.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n- **URL Endpoint:**\n    \n    - `https://cloud.uipath.com/{{`Organization`}}/portal_/api/filtering/leftnav/tenantsAndOrganizationInfo`\n        \n- **Output:**\n    \n    - Displays detailed information about the organization, region, user groups, and available tenants.\n        \n    - Automatically captures and saves the primary tenant name as {{`Tenant`}}.\n        \n\n---\n\n#### 🩺 TM Server Information Check\n\nVerifies the availability of the UiPath Test Manager service and retrieves basic server information.\n\n- **Method & Endpoint:** `GET` `https://cloud.uipath.com/{{`Organization`}}/{{`Tenant`}}/testmanager_/api/serverinfo`\n    \n- **Output:** Returns `200 OK` with server information, including the service version, server type, and status `\"OK\"` when the service is operational.\n    \n\n---\n\n#### 📁 TM - 02 Get Project Folder\n\nRetrieves the Test Manager **Project ID** required to scope down subsequent requests (Test Cases, Test Sets, Executions, etc.).\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n- **URL Parameters (OData Query):**\n    \n    - `$top`: Limit results _(e.g., 100)_\n        \n    - `$orderby`: Sorting criteria _(e.g.,_ `_updated desc_`_)_\n        \n- **Output:**\n    \n    - Displays the list of available projects in Test Manager.\n        \n    - Automatically captures and saves the first project ID as {{`Test_Project`}}."
+    },
+    {
+      "name": "01 - Test Cases",
+      "item": [
+        {
+          "name": "TM - Get Test Cases",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "    if (!Array.isArray(response.data) || response.data.length === 0) {\r",
+                  "        throw new Error(\"No Test Cases found in response.data\");\r",
+                  "    }\r",
+                  "\r",
+                  "const testCase = response.data[0];\r",
+                  "pm.collectionVariables.set(\"TestCase_ID\", testCase.id);\r",
+                  "pm.collectionVariables.set(\"TestCase_objKey\", testCase.objKey);\r",
+                  "console.log(\"🥇 First Test Case found:\");\r",
+                  "console.log(\"🔹 Test Case ID:\", testCase.id);\r",
+                  "console.log(\"🔹 Test Case Name:\", testCase.name);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testcases?top=100&orderby=updated desc",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "testcases"
+              ],
+              "query": [
+                {
+                  "key": "top",
+                  "value": "100",
+                  "description": "100 is the maximum value allowed. Keep this value."
+                },
+                {
+                  "key": "orderby",
+                  "value": "updated desc"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testcases?top=100&orderby=updated desc",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "{{Test_Project}}",
+                    "testcases"
+                  ],
+                  "query": [
+                    {
+                      "key": "top",
+                      "value": "100",
+                      "description": "100 is the maximum value allowed. Keep this value."
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "updated desc"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "{\r\n    \"data\": [\r\n        {\r\n            \"projectId\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"objKey\": \"MFP:1\",\r\n            \"version\": \"1.0.0\",\r\n            \"preCondition\": null,\r\n            \"inputParams\": null,\r\n            \"automationId\": null,\r\n            \"containerId\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"automationTestCaseName\": null,\r\n            \"automationProjectName\": null,\r\n            \"foreignReference\": null,\r\n            \"connectorTestCaseId\": null,\r\n            \"isAutomated\": false,\r\n            \"packageVersion\": null,\r\n            \"postCondition\": null,\r\n            \"packageEntryPointUniqueId\": null,\r\n            \"packageIdentifier\": null,\r\n            \"packageEntryPointName\": null,\r\n            \"feedId\": null,\r\n            \"packageSourceName\": null,\r\n            \"studioWebProjectId\": null,\r\n            \"studioWebFileId\": null,\r\n            \"isHidden\": false,\r\n            \"isGoverned\": null,\r\n            \"approvalStatus\": null,\r\n            \"totalApproversRequired\": null,\r\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"name\": \"MFP_My First TestCase\",\r\n            \"description\": \"Only for testing... always be empty\",\r\n            \"created\": \"2026-09-01T00:13:57.813Z\",\r\n            \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"updated\": \"2026-09-01T00:14:59.623Z\",\r\n            \"updatedBy\": \"00000000-0000-0000-0000-000000000000\"\r\n        }\r\n    ],\r\n    \"paging\": {\r\n        \"total\": 1,\r\n        \"page\": 1,\r\n        \"pages\": 1,\r\n        \"pageSize\": 12,\r\n        \"returned\": 1,\r\n        \"previousPage\": false,\r\n        \"nextPage\": false\r\n    }\r\n}"
+            }
+          ]
+        },
+        {
+          "name": "TM - Execute Test Case",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"ExecitionID\", response.id);\r",
+                  "console.log(\"✅ ExecutionID:\", response.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{TestCase_objKey}}\",\r\n    \"testCaseIds\": [\r\n        \"{{TestCase_ID}}\"\r\n    ],\r\n    \"correlationId\": \"{{$guid}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testcases/startexecute?executionType=Automated&asyncMode=true",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "testcases",
+                "startexecute"
+              ],
+              "query": [
+                {
+                  "key": "executionType",
+                  "value": "Automated"
+                },
+                {
+                  "key": "asyncMode",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"{{TestCase_objKey}}\",\r\n    \"testCaseIds\": [\r\n        \"{{TestCase_ID}}\"\r\n    ],\r\n    \"correlationId\": \"{{$guid}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testcases/startexecute?executionType=Automated&asyncMode=true",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "{{Test_Project}}",
+                    "testcases",
+                    "startexecute"
+                  ],
+                  "query": [
+                    {
+                      "key": "executionType",
+                      "value": "Automated"
+                    },
+                    {
+                      "key": "asyncMode",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\r\n    \"projectId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"testSetId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"testSetObjKey\": null,\r\n    \"executionStart\": null,\r\n    \"executionFinished\": null,\r\n    \"reportingDate\": null,\r\n    \"source\": \"TestManager\",\r\n    \"sourceDetails\": null,\r\n    \"enableCoverage\": null,\r\n    \"status\": \"Pending\",\r\n    \"hasTestsFromMultipleAutomationProjects\": false,\r\n    \"executionType\": \"Automated\",\r\n    \"runId\": 1,\r\n    \"enforceExecutionOrder\": false,\r\n    \"duration\": 0,\r\n    \"testSetScheduleId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"remoteControlAccess\": \"None\",\r\n    \"autopilotForRobotsSettings\": null,\r\n    \"orderedExecutionSettings\": null,\r\n    \"videoRecordingSettings\": null,\r\n    \"batchExecutionKey\": null,\r\n    \"folderKey\": null,\r\n    \"robotUserKey\": null,\r\n    \"runtimeType\": null,\r\n    \"machineKey\": null,\r\n    \"hostMachineName\": null,\r\n    \"serviceUsername\": null,\r\n    \"playwrightExecutionSnapshot\": null,\r\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"name\": \"Automated - MFP:1 - 20260901.0300\",\r\n    \"description\": \"Automated execution of test set MFP:1\",\r\n    \"created\": \"2026-09-01T03:00:55.47749Z\",\r\n    \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"updated\": \"2026-09-01T03:00:55.47749Z\",\r\n    \"updatedBy\": \"00000000-0000-0000-0000-000000000000\"\r\n}"
+            }
+          ]
+        }
+      ],
+      "description": "# 🧪 01 - Test Cases\n\nThis folder contains requests focused on managing and triggering individual Test Cases within UiPath Test Manager, including fetching existing test cases and initiating single-case executions.\n\n---\n\n## ⚠️ Important\n\nThis collection is intended as a demonstration and execution utility for UiPath Test Manager APIs.\n\n**Test Case selection:** For demonstration purposes, the collection automatically selects the **first Test Case** returned by the API.\n\nIf you want to execute a different Test Case, identify the desired item in the response and assign its ID to the corresponding collection variable `TestCase_ID`, or remove the Post response script that automatically assigns the first item.\n\n---\n\n## 🔍 TM - Get Test Cases\n\nRetrieves the list of available Test Cases within the selected project. Use this request to inspect existing test cases and automatically extract a `TestCase_ID` for single-case executions or reporting.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n\n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n- **URL Parameters (OData Query):**\n    \n    - `$top`: Limit number of returned results _(e.g., 100)_\n        \n    - `$orderby`: Sorting criteria _(e.g.,_ `_updated desc_`_)_\n        \n- **Output:**\n    \n    - Returns an array of test cases with details (Name, Key, Version, etc.).\n        \n    - Saves the first retrieved ID into `TestCase_ID`.\n        \n\n---\n\n## 🚀 TM - Execute Test Case\n\nTriggers the execution of a specific Test Case directly within UiPath Test Manager.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n    - `Content-Type`: `application/json`\n        \n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n- **Request Body (raw JSON):**\n    \n    ``` json\n      {  \n      \"name\": \"MFP:1\",  \n      \"testCaseIds\": \\[ \"{{`TestCase_ID`}}\" \\],  \n      \"correlationId\": \"{{`$guid`}}\"  \n      }\n    \n     ```\n    \n- **Output:**\n    \n    - Initiates the _Test Case_ execution in UiPath Test Manager.\n        \n    - Automatically captures and saves the generated `ExecitionID` as a collection variable for status tracking in subsequent requests."
+    },
+    {
+      "name": "02 - Test Sets",
+      "item": [
+        {
+          "name": "TM - Get Test Set",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "    if (!Array.isArray(response.data) || response.data.length === 0) {\r",
+                  "        throw new Error(\"No Test Sets found in response.data\");\r",
+                  "    }\r",
+                  "\r",
+                  "const testSet = response.data[0];\r",
+                  "pm.collectionVariables.set(\"TestSet_ID\", testSet.id);\r",
+                  "console.log(\"🥇 First Test Set found:\");\r",
+                  "console.log(\"🔹 Test Set ID:\", testSet.id);\r",
+                  "console.log(\"🔹 Test Set Name:\", testSet.name);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testsets?orderby=updated desc",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "testsets"
+              ],
+              "query": [
+                {
+                  "key": "orderby",
+                  "value": "updated desc"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testsets?orderby=updated desc",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "{{Test_Project}}",
+                    "testsets"
+                  ],
+                  "query": [
+                    {
+                      "key": "orderby",
+                      "value": "updated desc"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [],
+              "body": "{\r\n    \"data\": [\r\n        {\r\n            \"projectId\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"objKey\": \"MFP:2\",\r\n            \"version\": null,\r\n            \"source\": \"TestManager\",\r\n            \"sourceDetails\": null,\r\n            \"externalTestSetId\": null,\r\n            \"enableCoverage\": true,\r\n            \"remoteControlAccess\": \"None\",\r\n            \"autopilotForRobotsSettings\": null,\r\n            \"videoRecordingSettings\": null,\r\n            \"enforceExecutionOrder\": false,\r\n            \"orderedExecutionSettings\": null,\r\n            \"executionNameFormatOverride\": null,\r\n            \"folderKey\": null,\r\n            \"robotName\": null,\r\n            \"robotUserKey\": null,\r\n            \"runtimeType\": null,\r\n            \"machineKey\": null,\r\n            \"hostMachineName\": null,\r\n            \"serviceUsername\": null,\r\n            \"isHidden\": false,\r\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"name\": \"My First Test Set\",\r\n            \"description\": \"Only for Testing\",\r\n            \"created\": \"2026-09-01T01:17:09.997Z\",\r\n            \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"updated\": \"2026-09-01T01:17:09.997Z\",\r\n            \"updatedBy\": \"00000000-0000-0000-0000-000000000000\"\r\n        }\r\n    ],\r\n    \"paging\": {\r\n        \"total\": 1,\r\n        \"page\": 1,\r\n        \"pages\": 1,\r\n        \"pageSize\": 12,\r\n        \"returned\": 1,\r\n        \"previousPage\": false,\r\n        \"nextPage\": false\r\n    }\r\n}"
+            }
+          ]
+        },
+        {
+          "name": "TM - Execute Test Set",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"ExecitionID\", response.id);\r",
+                  "console.log(\"✅ ExecutionID:\", response.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"correlationId\": \"{{$guid}}\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testsets/{{TestSet_ID}}/startexecute?executionType=Automated&asyncMode=true",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "testsets",
+                "{{TestSet_ID}}",
+                "startexecute"
+              ],
+              "query": [
+                {
+                  "key": "executionType",
+                  "value": "Automated"
+                },
+                {
+                  "key": "asyncMode",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"correlationId\": \"{{$guid}}\" \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testsets/{{TestSet_ID}}/startexecute?executionType=Automated&asyncMode=true",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "{{Test_Project}}",
+                    "testsets",
+                    "{{TestSet_ID}}",
+                    "startexecute"
+                  ],
+                  "query": [
+                    {
+                      "key": "executionType",
+                      "value": "Automated"
+                    },
+                    {
+                      "key": "asyncMode",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\r\n    \"projectId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"testSetId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"testSetObjKey\": null,\r\n    \"executionStart\": null,\r\n    \"executionFinished\": null,\r\n    \"reportingDate\": null,\r\n    \"source\": \"TestManager\",\r\n    \"sourceDetails\": null,\r\n    \"enableCoverage\": null,\r\n    \"status\": \"Pending\",\r\n    \"hasTestsFromMultipleAutomationProjects\": false,\r\n    \"executionType\": \"Automated\",\r\n    \"runId\": 1,\r\n    \"enforceExecutionOrder\": false,\r\n    \"duration\": 0,\r\n    \"testSetScheduleId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"remoteControlAccess\": \"None\",\r\n    \"autopilotForRobotsSettings\": null,\r\n    \"orderedExecutionSettings\": null,\r\n    \"videoRecordingSettings\": null,\r\n    \"batchExecutionKey\": null,\r\n    \"folderKey\": null,\r\n    \"robotUserKey\": null,\r\n    \"runtimeType\": null,\r\n    \"machineKey\": null,\r\n    \"hostMachineName\": null,\r\n    \"serviceUsername\": null,\r\n    \"playwrightExecutionSnapshot\": null,\r\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"name\": \"Automated - My First Test Set - 20260901.0304\",\r\n    \"description\": \"Automated execution of test set My First Test Set\",\r\n    \"created\": \"2026-09-01T03:04:33.5137358Z\",\r\n    \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"updated\": \"2026-09-01T03:04:33.5137358Z\",\r\n    \"updatedBy\": \"00000000-0000-0000-0000-000000000000\"\r\n}"
+            }
+          ]
+        }
+      ],
+      "description": "# 📦 02 - Test Sets\n\nThis folder contains requests focused on managing and executing Test Sets (Test Execution Containers) within UiPath Test Manager, enabling full test suite execution.\n\n---\n\n## ⚠️ Important\n\nThis collection is intended as a demonstration and execution utility for UiPath Test Manager APIs.\n\n**Test Set selection:** For demonstration purposes, the collection automatically selects the **first Test Set** returned by the API.\n\nIf you want to execute a different Test Set, identify the desired item in the response and assign its ID to the corresponding collection variable `TestSet_ID`, or remove the Post response script that automatically assigns the first item.\n\n---\n\n## 🔍 TM - Get Test Set\n\nRetrieves all available Test Sets within the project. Use this request to inspect test set configurations and automatically extract the `TestSet_ID` required for suite executions.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n- **URL Parameters (OData Query):**\n    \n    - `$orderby`: Sorting criteria _(e.g.,__**\\`**__updated desc_\\`_)_\n        \n- **Output:**\n    \n    - Displays the list of available Test Sets and their details.\n        \n    - Automatically captures and saves the first retrieved ID as `TestSet_ID`.\n        \n\n---\n\n## 🚀 TM - Execute Test Set\n\nTriggers the execution of an entire Test Set within UiPath Test Manager.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n    - `Content-Type`: `application/json`\n        \n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n- **Request Body (raw JSON):**\n    \n    ``` json\n    {  \n    \"correlationId\": \"{{`$guid`}}\"  \n    }\n    \n     ```\n    \n- **Output:**\n    \n    - Initiates the _Test Set_ execution in UiPath Test Manager.\n        \n    - Automatically captures and saves the generated `ExecitionID` as a collection variable for status tracking in subsequent requests."
+    },
+    {
+      "name": "03 - Executions",
+      "item": [
+        {
+          "name": "TM - Get all Test Execution",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "    if (!Array.isArray(response.data) || response.data.length === 0) {\r",
+                  "        throw new Error(\"No test executions found in response.data\");\r",
+                  "    }\r",
+                  "\r",
+                  "const ExecutionID = response.data[0];\r",
+                  "pm.collectionVariables.set(\"ExecitionID\", ExecutionID.id);\r",
+                  "console.log(\"🕐 Latest Test Execution found:\");\r",
+                  "console.log(\"✅ Execution ID:\", ExecutionID.id);\r",
+                  "console.log(\"✅ Execution Name:\", ExecutionID.name);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testexecutions?orderby=executionFinished desc&top=100",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "testexecutions"
+              ],
+              "query": [
+                {
+                  "key": "orderby",
+                  "value": "executionFinished desc"
+                },
+                {
+                  "key": "top",
+                  "value": "100",
+                  "description": "100 is the maximum value allowed. Keep this value."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testexecutions?orderby=executionFinished desc&top=1",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "{{Test_Project}}",
+                    "testexecutions"
+                  ],
+                  "query": [
+                    {
+                      "key": "orderby",
+                      "value": "executionFinished desc"
+                    },
+                    {
+                      "key": "top",
+                      "value": "1",
+                      "description": "100 is the maximum value allowed. Keep this value."
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\r\n    \"data\": [\r\n        {\r\n            \"projectId\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"testSetId\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"testSetObjKey\": null,\r\n            \"executionStart\": \"2026-09-01T16:32:36.033Z\",\r\n            \"executionFinished\": \"2026-09-01T16:32:40.413Z\",\r\n            \"reportingDate\": \"2026-09-01T16:32:36.033Z\",\r\n            \"source\": \"TestManager\",\r\n            \"sourceDetails\": null,\r\n            \"enableCoverage\": null,\r\n            \"status\": \"Finished\",\r\n            \"hasTestsFromMultipleAutomationProjects\": false,\r\n            \"executionType\": \"Automated\",\r\n            \"runId\": 1,\r\n            \"enforceExecutionOrder\": false,\r\n            \"duration\": 4380,\r\n            \"testSetScheduleId\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"remoteControlAccess\": \"None\",\r\n            \"autopilotForRobotsSettings\": null,\r\n            \"orderedExecutionSettings\": null,\r\n            \"videoRecordingSettings\": null,\r\n            \"batchExecutionKey\": null,\r\n            \"folderKey\": null,\r\n            \"robotUserKey\": null,\r\n            \"runtimeType\": null,\r\n            \"machineKey\": null,\r\n            \"hostMachineName\": null,\r\n            \"serviceUsername\": null,\r\n            \"playwrightExecutionSnapshot\": null,\r\n            \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"name\": \"Automated - MFP:1 - 20260901.1632\",\r\n            \"description\": \"Automated execution of test set MFP:1\",\r\n            \"created\": \"2026-09-01T16:32:34.54Z\",\r\n            \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"updated\": \"2026-09-01T16:32:56.377Z\",\r\n            \"updatedBy\": \"00000000-0000-0000-0000-000000000000\"\r\n        }\r\n    ],\r\n    \"paging\": {\r\n        \"total\": 19,\r\n        \"page\": 1,\r\n        \"pages\": 19,\r\n        \"pageSize\": 1,\r\n        \"returned\": 1,\r\n        \"previousPage\": false,\r\n        \"nextPage\": true\r\n    }\r\n}"
+            }
+          ]
+        },
+        {
+          "name": "TM - Get Results by ExecutionID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "// Validate HTTP response\r",
+                  "pm.test(\"TM - Get Results by ExecutionID : Status 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "// Validate required fields\r",
+                  "pm.test(\"TM - Get Results by ExecutionID : Results are available\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"passed\");\r",
+                  "    pm.expect(response).to.have.property(\"failed\");\r",
+                  "    pm.expect(response).to.have.property(\"none\");\r",
+                  "});\r",
+                  "\r",
+                  "// Validate result values\r",
+                  "const passed = Number(response.passed);\r",
+                  "const failed = Number(response.failed);\r",
+                  "const none = Number(response.none);\r",
+                  "\r",
+                  "pm.test(\"TM - Get Results by ExecutionID : Valid result values\", function () {\r",
+                  "    pm.expect(passed).to.be.at.least(0);\r",
+                  "    pm.expect(failed).to.be.at.least(0);\r",
+                  "    pm.expect(none).to.be.at.least(0);\r",
+                  "});\r",
+                  "\r",
+                  "// Console summary\r",
+                  "console.log(\"📊 Test Execution Results\");\r",
+                  "console.log(\"✅ Passed:\", passed);\r",
+                  "console.log(\"❌ Failed:\", failed);\r",
+                  "console.log(\"⚪ None:\", none);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testexecutions/{{ExecitionID}}/withStats",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "testexecutions",
+                "{{ExecitionID}}",
+                "withStats"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testexecutions/{{ExecitionID}}/withStats",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "{{Test_Project}}",
+                    "testexecutions",
+                    "{{ExecitionID}}",
+                    "withStats"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\r\n    \"passed\": 1,\r\n    \"failed\": 0,\r\n    \"none\": 0,\r\n    \"isRunningAutomated\": false,\r\n    \"projectId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"testSetId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"testSetObjKey\": null,\r\n    \"executionStart\": \"2026-09-01T04:26:56.363Z\",\r\n    \"executionFinished\": \"2026-09-01T04:27:01.673Z\",\r\n    \"reportingDate\": \"2026-09-01T04:26:56.363Z\",\r\n    \"source\": \"TestManager\",\r\n    \"sourceDetails\": null,\r\n    \"enableCoverage\": null,\r\n    \"status\": \"Finished\",\r\n    \"hasTestsFromMultipleAutomationProjects\": false,\r\n    \"executionType\": \"Automated\",\r\n    \"runId\": 1,\r\n    \"enforceExecutionOrder\": false,\r\n    \"duration\": 5310,\r\n    \"testSetScheduleId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"remoteControlAccess\": \"None\",\r\n    \"autopilotForRobotsSettings\": null,\r\n    \"orderedExecutionSettings\": null,\r\n    \"videoRecordingSettings\": null,\r\n    \"batchExecutionKey\": null,\r\n    \"folderKey\": null,\r\n    \"robotUserKey\": null,\r\n    \"runtimeType\": null,\r\n    \"machineKey\": null,\r\n    \"hostMachineName\": null,\r\n    \"serviceUsername\": null,\r\n    \"playwrightExecutionSnapshot\": null,\r\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"name\": \"Automated - MFP:1 - 20260901.0426\",\r\n    \"description\": \"Automated execution of test set MFP:1\",\r\n    \"created\": \"2026-09-01T04:26:54.67Z\",\r\n    \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"updated\": \"2026-09-01T04:27:15.953Z\",\r\n    \"updatedBy\": \"00000000-0000-0000-0000-000000000000\"\r\n}"
+            }
+          ]
+        },
+        {
+          "name": "TM - Get Owners",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\"{{Test_Project}}\"]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/projects/fetchOwners",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "projects",
+                "fetchOwners"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\"{{Test_Project}}\"]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/projects/fetchOwners",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "projects",
+                    "fetchOwners"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\r\n    \"00000000-0000-0000-0000-000000000000\": [\r\n        {\r\n            \"localIdentifier\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"identifier\": \"00000000-0000-0000-0000-000000000000\",\r\n            \"identityName\": \"Samuel@Inicia.ME\",\r\n            \"name\": null,\r\n            \"objectType\": \"LocalUser\",\r\n            \"source\": null,\r\n            \"email\": \"Samuel@Inicia.ME\",\r\n            \"displayName\": \"Samuel Betancourt\",\r\n            \"firstName\": \"Samuel\",\r\n            \"lastName\": \"Betancourt\"\r\n        }\r\n    ]\r\n}"
+            }
+          ]
+        }
+      ],
+      "description": "# 📊 03 - Executions\n\nThis folder contains requests focused on querying test execution results, retrieving real-time status and logs for specific runs, and fetching project user details within UiPath Test Manager.\n\n---\n## ⚠️ Important\n\nFor demonstration purposes, the collection automatically selects the most recently finished Test Execution returned by the API.\n\nThe results are sorted by `executionFinished` in descending order, and the collection uses the first item returned to populate `ExecitionID`.\n\nIf you want to use a specific Test Execution, identify the desired execution in the response and assign its ID to the `ExecitionID` collection variable, or remove the Post-response script that performs the automatic selection.\n\n---\n\n## 🔍 TM - Get all Test Execution\n\nRetrieves a complete list of test executions within the specified project. Useful for auditing, generating dashboards, or checking overall test history.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n- **Output:**\n    \n    - Displays a historical list of all test executions and their current status _(e.g., Passed, Failed, In Progress)_.\n        \n\n---\n\n## 🔍 TM - Get Results by ExecutionID\n\nRetrieves detailed information and real-time execution status for a single test run.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n\n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n    - `ExecutionID`: {{`ExecutionID`}} _(obtained when triggering a Test Case or Test Set)_\n        \n- **Output:**\n    \n    - Returns execution status, duration, and aggregated test results including Passed, Failed, and None counts.\n        \n\n---\n\n## 🔍 TM - Get Owners\n\nRetrieves the list of project members and owners available within Test Manager.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n\n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n\n- **Output:**\n    \n    - Returns user profiles, IDs, and email addresses associated with the target project."
+    },
+    {
+      "name": "04 - Reports",
+      "item": [
+        {
+          "name": "TM - Get PDF Result",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"PDF_ID\", response.id);\r",
+                  "console.log(\"✅ PDF_ID:\", response.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testcaselogs/testexecution/{{ExecitionID}}/export?fileExportType=pdf",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "testcaselogs",
+                "testexecution",
+                "{{ExecitionID}}",
+                "export"
+              ],
+              "query": [
+                {
+                  "key": "fileExportType",
+                  "value": "pdf"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/testcaselogs/testexecution/{{ExecitionID}}/export?fileExportType=pdf",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "{{Test_Project}}",
+                    "testcaselogs",
+                    "testexecution",
+                    "{{ExecitionID}}",
+                    "export"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileExportType",
+                      "value": "pdf"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\r\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"payload\": {\r\n        \"testExecutionId\": \"00000000-0000-0000-0000-000000000000\",\r\n        \"timeZoneId\": null\r\n    },\r\n    \"fileExportJobStatus\": \"Initiated\",\r\n    \"fileExportTaskType\": \"TestExecutionPdfExport\",\r\n    \"attachmentId\": null,\r\n    \"created\": \"2026-09-01T02:39:19.3525717Z\",\r\n    \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"updated\": \"2026-09-01T02:39:19.3525717Z\",\r\n    \"updatedBy\": \"00000000-0000-0000-0000-000000000000\"\r\n}"
+            }
+          ]
+        },
+        {
+          "name": "TM - File Export Job",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "if (response.fileExportJobStatus === \"Completed\") {\r",
+                  "    pm.collectionVariables.set(\r",
+                  "        \"Attachment_ID\",\r",
+                  "        response.attachmentId\r",
+                  "    );\r",
+                  "    console.log(\"📎 Attachment_ID:\", response.attachmentId);\r",
+                  "\r",
+                  "} else {\r",
+                  "    console.log(\r",
+                  "        \"⏳ PDF is not ready yet:\",\r",
+                  "        response.fileExportJobStatus\r",
+                  "    );\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/fileexportjobs/{{PDF_ID}}/testSet",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "fileexportjobs",
+                "{{PDF_ID}}",
+                "testSet"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/fileexportjobs/{{PDF_ID}}/testSet",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "{{Test_Project}}",
+                    "fileexportjobs",
+                    "{{PDF_ID}}",
+                    "testSet"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\r\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"payload\": {\r\n        \"testExecutionId\": \"00000000-0000-0000-0000-000000000000\",\r\n        \"timeZoneId\": null\r\n    },\r\n    \"fileExportJobStatus\": \"Completed\",\r\n    \"fileExportTaskType\": \"TestExecutionPdfExport\",\r\n    \"attachmentId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"created\": \"2026-09-01T02:39:19.3525717Z\",\r\n    \"createdBy\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"updated\": \"2026-09-01T02:39:20.5344995Z\",\r\n    \"updatedBy\": \"00000000-0000-0000-0000-000000000000\"\r\n}"
+            }
+          ]
+        },
+        {
+          "name": "TM - Download PDF Report",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"TM - Download PDF Attachment - Status 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "console.log(\"📥 PDF Binary ready for download. Size:\", pm.response.responseSize, \"bytes\");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/attachments/explorationResult/{{Attachment_ID}}/download",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "attachments",
+                "explorationResult",
+                "{{Attachment_ID}}",
+                "download"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "# 📄 04 - Reports\n\nThis folder contains requests used to generate, track, and download PDF summary reports containing assertion details and screenshots from UiPath Test Manager.\n\n---\n\n#### 🛠️ 1. TM - Get PDF Result\n\nDirectly requests the PDF summary report generation for a specific Test Case or Test Set execution.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n    - `ExecutionID`: {{`ExecutionID`}} _(obtained when triggering a Test Case or Test Set)_\n        \n- **Output:**\n    \n    - Initiates the PDF generation background process.\n        \n    - Automatically captures and saves the generated {{`PDF_ID`}}.\n        \n\n---\n\n#### ⏳ 2. TM - File Export Job\n\nQueries the asynchronous background export job status to verify report readiness and retrieve file attachment details.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n    - `id`: {{`PDF_ID`}} _(obtained in the previous step)_\n        \n- **Output:**\n    \n    - Returns background job status.\n        \n    - Automatically captures and saves the generated {{`Attachment_ID`}} when ready for download.\n        \n\n---\n\n#### 📥 3. TM - Download PDF Report\n\nDownloads the generated PDF execution report containing the execution results, assertion details (Pass/Fail status), and attached screenshots for a specific Test Case or Test Set run.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n    - `id`: {{`Attachment_ID`}} _(obtained in the previous step)_\n        \n- **Output:**\n    \n    - Downloads the binary stream (PDF or artifact file) corresponding to the specified {{`Attachment_ID`}}."
+    },
+    {
+      "name": "05 - Labels",
+      "item": [
+        {
+          "name": "TM - Get Labels by ExecutionID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseData = pm.response.json();\r",
+                  "    pm.test(\"TM - Get Labels by ExecutionID - Status 200\", function () {\r",
+                  "        pm.response.to.have.status(200);\r",
+                  "    });\r",
+                  "\r",
+                  "    pm.test(\"TM - Get Labels - Valid Array Response\", function () {\r",
+                  "        pm.expect(responseData).to.be.an('array');\r",
+                  "});\r",
+                  "\r",
+                  "if (responseData.length === 0) {\r",
+                  "    console.log(\"📋 Labels Found: [No labels assigned]\");\r",
+                  "} else {\r",
+                  "    const labelNames = responseData.map(item => item.name);\r",
+                  "    console.log(`📋 Labels Found (${responseData.length}):`, labelNames.join(\", \"));\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/objectlabels/TestExecution/{{ExecitionID}}/all",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "objectlabels",
+                "TestExecution",
+                "{{ExecitionID}}",
+                "all"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/objectlabels/TestExecution/{{ExecitionID}}/all",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "{{Test_Project}}",
+                    "objectlabels",
+                    "TestExecution",
+                    "{{ExecitionID}}",
+                    "all"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "[\r\n    {\r\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n        \"objectId\": \"00000000-0000-0000-0000-000000000000\",\r\n        \"objectType\": \"testExecution\",\r\n        \"projectId\": \"00000000-0000-0000-0000-000000000000\",\r\n        \"name\": \"IniciaME\",\r\n        \"description\": \"\",\r\n        \"labelType\": \"userLabel\"\r\n    }\r\n]"
+            }
+          ]
+        },
+        {
+          "name": "TM - Assign Label by ExecutionID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const requestBody = JSON.parse(pm.request.body.raw);\r",
+                  "const labelEnviado = requestBody.label; \r",
+                  "\r",
+                  "const responseText = pm.response.text();\r",
+                  "\r",
+                  "pm.test(\"TM - Assign Label by ExecutionID - Status 204\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"TM - Assign Label by ExecutionID : Added\", function () {\r",
+                  "    pm.expect(responseText.trim()).to.eql(\"\");\r",
+                  "});\r",
+                  "\r",
+                  "console.log(\"🏷️ Label Added:\", labelEnviado);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"label\": \"IniciaME\",\r\n    \"objectType\": \"TestExecution\",\r\n    \"projectId\": \"{{Test_Project}}\",\r\n    \"correlationId\": \"{{$guid}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/objectlabels/TestExecution/{{ExecitionID}}/assign",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "objectlabels",
+                "TestExecution",
+                "{{ExecitionID}}",
+                "assign"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"label\": \"IniciaME\",\r\n    \"objectType\": \"TestExecution\",\r\n    \"projectId\": \"{{Test_Project}}\",\r\n    \"correlationId\": \"{{$guid}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/objectlabels/TestExecution/{{ExecitionID}}/assign",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "{{Test_Project}}",
+                    "objectlabels",
+                    "TestExecution",
+                    "{{ExecitionID}}",
+                    "assign"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "TM - Unassign Label by ExecutionID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const requestBody = JSON.parse(pm.request.body.raw);\r",
+                  "const labelRemovido = requestBody.label; \r",
+                  "\r",
+                  "const responseText = pm.response.text();\r",
+                  "\r",
+                  "pm.test(\"TM - Remove Label by ExecutionID - Status 204\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"TM - Remove Label by ExecutionID : Removed\", function () {\r",
+                  "    pm.expect(responseText.trim()).to.eql(\"\");\r",
+                  "});\r",
+                  "\r",
+                  "console.log(\"🗑️ Label Removed:\", labelRemovido);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"label\": \"IniciaME\",\r\n    \"objectType\": \"TestExecution\",\r\n    \"projectId\": \"{{Test_Project}}\",\r\n    \"correlationId\": \"{{$guid}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/objectlabels/TestExecution/{{ExecitionID}}/unassign",
+              "protocol": "https",
+              "host": [
+                "cloud",
+                "uipath",
+                "com"
+              ],
+              "path": [
+                "{{Organization}}",
+                "{{Tenant}}",
+                "testmanager_",
+                "api",
+                "v2",
+                "{{Test_Project}}",
+                "objectlabels",
+                "TestExecution",
+                "{{ExecitionID}}",
+                "unassign"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"label\": \"IniciaME\",\r\n    \"objectType\": \"TestExecution\",\r\n    \"projectId\": \"{{Test_Project}}\",\r\n    \"correlationId\": \"{{$guid}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://cloud.uipath.com/{{Organization}}/{{Tenant}}/testmanager_/api/v2/{{Test_Project}}/objectlabels/TestExecution/{{ExecitionID}}/unassign",
+                  "protocol": "https",
+                  "host": [
+                    "cloud",
+                    "uipath",
+                    "com"
+                  ],
+                  "path": [
+                    "{{Organization}}",
+                    "{{Tenant}}",
+                    "testmanager_",
+                    "api",
+                    "v2",
+                    "{{Test_Project}}",
+                    "objectlabels",
+                    "TestExecution",
+                    "{{ExecitionID}}",
+                    "unassign"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            }
+          ]
+        }
+      ],
+      "description": "# 🏷️ 05 - Labels\n\nThis folder contains requests used to retrieve, assign, and remove labels or tags on test objects, facilitating better categorization, organization, and filtering within UiPath Test Manager.\n\n---\n\n#### 🔍 TM - Get Labels\n\nRetrieves all available labels/tags defined within the project. Useful for filtering, categorization, and organizing test assets.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n    - `ExecutionID`: {{`ExecutionID`}} _(obtained when triggering a Test Case or Test Set)_\n        \n- **Output:**\n    \n    - Displays the collection of labels with their respective IDs, names, and assigned colors.\n        \n\n---\n\n#### 🏷️ TM - Assign Label\n\nAssigns a specific label to a Test Execution object.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n    - `Content-Type`: `application/json`\n        \n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n    - `ExecutionID`: {{`ExecutionID`}} _(obtained when triggering a Test Case or Test Set)_\n        \n- **Request Body (raw JSON):**\n    \n    ```json\n    {\n      \"label\": \"IniciaME\",\n      \"objectType\": \"TestExecution\",\n      \"projectId\": \"{{`Test_Project`}}\",\n      \"correlationId\": \"{{`$guid`}}\"\n    }\n    ```\n        \n- **Output:**\n    \n    - Returns `204 No Content`. Links the label to the test execution successfully.\n        \n\n---\n\n#### 🗑️ TM - Unassign Label\n\nRemoves an assigned label from a specific Test Execution object.\n\n- **Required Headers:**\n    \n    - `Authorization`: Bearer {{`Token`}} _(obtained in step 00)_\n        \n    - `Content-Type`: `application/json`\n        \n- **URL Path Variables:**\n    \n    - `Tenant`: {{`Tenant`}} _(obtained in step 01)_\n        \n    - `Project-Id`: {{`Test_Project`}} _(obtained in step 02)_\n        \n    - `ExecutionID`: {{`ExecutionID`}} _(obtained when triggering a Test Case or Test Set)_\n        \n- **Request Body (raw JSON):**\n    \n    ```json\n    {\n      \"label\": \"IniciaME\",\n      \"objectType\": \"TestExecution\",\n      \"projectId\": \"{{`Test_Project`}}\",\n      \"correlationId\": \"{{`$guid`}}\"\n    }\n    ```\n        \n- **Output:**\n    \n    - Returns `204 No Content`. Unlinks the label from the target execution successfully."
+    },
+    {
+      "name": "99 - How To",
+      "item": [],
+      "description": "# 📘 99 - How To\n\nThis section details the End-to-End (E2E) execution workflows available in this collection, explaining how requests interact sequentially to execute tests and retrieve PDF reports.\n\n---\n\n### 🛠️ Step-by-Step Guidance\n\n#### 🧪 Option 1: Execute a Single Test Case\n\n1. **Authentication & Setup (`00 - Setup`):**\n   - Run **🔑 TM - 00 Get Token** to fetch and store {{`Token`}}.\n   - Run **🌐 TM My Organization Info** to select and save {{`Tenant`}}.\n   - Run **📁 TM - Get Project** to capture and save {{`Test_Project`}}.\n\n2. **Execution (`01 - Test Cases`):**\n   - Run **🔍 TM - Get Test Cases** to fetch {{`TestCase_ID`}}.\n   - Run **🚀 TM - Execute Test Case** to launch execution and receive {{`ExecutionID`}}.\n\n3. **Tracking & Reporting (`03` & `04`):**\n   - Track execution status via **📊 TM - Get Execution by ExecutionID**.\n   - Generate the report using **🛠️ 1. TM - Get PDF Result** to capture {{`PDF_ID`}}.\n   - Poll **⏳ 2. TM - File Export Job** until ready to capture {{`Attachment_ID`}}.\n   - Download the report using **📥 3. TM - Download PDF Report**.\n\n---\n\n#### 📦 Option 2: Execute an Entire Test Set\n\n1. **Authentication & Setup (`00 - Setup`):**\n   - Run **🔑 TM - 00 Get Token** to fetch and store {{`Token`}}.\n   - Run **🌐 TM My Organization Info** to select and save {{`Tenant`}}.\n   - Run **📁 TM - Get Project** to capture and save {{`Test_Project`}}.\n\n2. **Execution (`02 - Test Sets`):**\n   - Run **🔍 TM - Get Test Set** to fetch {{`TestSet_ID`}}.\n   - Run **🚀 TM - Execute Test Set** to launch execution and receive {{`ExecutionID`}}.\n\n3. **Tracking & Reporting (`03` & `04`):**\n   - Track execution status via **📊 TM - Get Execution by ExecutionID**.\n   - Generate the report using **🛠️ 1. TM - Get PDF Result** to capture {{`PDF_ID`}}.\n   - Poll **⏳ 2. TM - File Export Job** until ready to capture {{`Attachment_ID`}}.\n   - Download the report using **📥 3. TM - Download PDF Report**."
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{Token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "ClientID",
+      "value": "",
+      "description": "Required for Token Request"
+    },
+    {
+      "key": "ClientSecret",
+      "value": "",
+      "description": "Required for Token Request"
+    },
+    {
+      "key": "Organization",
+      "value": "",
+      "description": "eg: Inicia.ME"
+    },
+    {
+      "key": "Tenant",
+      "value": "",
+      "description": "Orchestrator Tenant"
+    },
+    {
+      "key": "Test_Project",
+      "value": "",
+      "description": "Test Manager Project ID"
+    },
+    {
+      "key": "TestCase_ID",
+      "value": "",
+      "description": "Test Manager - Test Case ID"
+    },
+    {
+      "key": "TestSet_ID",
+      "value": "",
+      "description": "Test Manager - Test Set ID"
+    },
+    {
+      "key": "ExecitionID",
+      "value": "",
+      "description": "After executing a Test Case/Test Set, the ExecutionID is the same for both, as it is retrieved as a Test Set."
+    },
+    {
+      "key": "PDF_ID",
+      "value": "",
+      "description": "Request to create a PDF file with the results."
+    },
+    {
+      "key": "Attachment_ID",
+      "value": "",
+      "description": "ID of the PDF file to be downloaded"
+    }
+  ]
+}
