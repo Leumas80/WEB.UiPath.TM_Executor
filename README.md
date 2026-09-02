@@ -26,13 +26,19 @@ Explore the TM Executor interface directly in your browser. This live demonstrat
 
 ---
 
-## 🎥 Demo
+## 🎥 Demo & Walkthrough
 
-> **Video coming soon**
+[![Watch the Demo](https://img.youtube.com/vi/rXGuKol8k8k/maxresdefault.jpg)](https://youtu.be/rXGuKol8k8k)
 
-The demo presents the complete workflow, from Test Manager API exploration and configuration through test execution, real-time monitoring, result retrieval, PDF reporting, and containerized deployment.
+> 🎬 **Watch the full video on YouTube:** [UiPath Test Manager without Orchestrator? REST API Test Execution & PDF Evidence](https://youtu.be/rXGuKol8k8k)
 
-The video also demonstrates the application running remotely through a mobile device connected to the Docker-hosted instance.
+### What you will see in the demo:
+* **UiPath Test Manager (UTM) Overview:** Understanding the core configuration and test architecture.
+* **API Exploration via Postman:** How the REST API endpoints are consumed and validated.
+* **TM Executor (TME) Interface:** Executing test sets and generating instant PDF evidence.
+* **Containerization with Docker:** Deploying the application seamlessly using Docker Compose.
+* **Mobile Execution:** Running tests remotely from a smartphone connected to the containerized instance.
+* **GitHub Pages Integration:** Accessing the live demo directly hosted on GitHub Pages.
 
 ---
 
